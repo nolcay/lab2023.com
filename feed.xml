@@ -1,0 +1,1186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>lab2023.com</title>
+  <subtitle>lab2023 official blog</subtitle>
+  <id>http://lab2023.com/</id>
+  <link href="http://lab2023.com/"/>
+  <link href="http://lab2023.com/feed.xml" rel="self"/>
+  <updated>2014-04-22T00:00:00Z</updated>
+  <entry>
+    <title>Rails View Helpers With Haml</title>
+    <link rel="alternate" href="http://lab2023.com/rails-view-helpers.html"/>
+    <id>http://lab2023.com/rails-view-helpers.html</id>
+    <published>2014-04-22T00:00:00Z</published>
+    <updated>2014-05-03T17:35:58+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Our marketting department recorded a lot of &lt;a href="http://www.youtube.com/user/Bulutfon"&gt;tutorial&lt;/a&gt; &lt;a href="https://vimeo.com/bulutfon"&gt;videos&lt;/a&gt; at last week. They want to link to related videos at related pages. Let&amp;rsquo;s do this with a clever way.&lt;/p&gt;
+
+&lt;p&gt;This is our sample haml code block which shows icons and link to videos. As you see there are duplicate codes.&lt;/p&gt;
+&lt;pre class="highlight haml"&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;content_for&lt;/span&gt; &lt;span class="ss"&gt;:toolbar&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="s1"&gt;'Vimeo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="s1"&gt;'https://vimeo.com/92406233'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;           &lt;span class="ss"&gt;target: &lt;/span&gt;&lt;span class="s1"&gt;'_blank'&lt;/span&gt;
+  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="s1"&gt;'Youtube'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'http://www.youtube.com/user/Bulutfon'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;target: &lt;/span&gt;&lt;span class="s1"&gt;'_blank'&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;There is a &lt;code&gt;helpers&lt;/code&gt; directory in app folder and we write our custom view helper there.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;app/
+   assets/
+   controllers/
+   helpers/  &amp;lt;-- HERE
+   mailers/
+   models/
+   views/
+&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create our custom helper.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;# app/helpers/app_custom_helper.rb&lt;/span&gt;
+&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;AppCustomHelper&lt;/span&gt; 
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;video_link&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+    &lt;span class="n"&gt;capture_haml&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;haml_concat&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;target: &lt;/span&gt;&lt;span class="s1"&gt;'_blank'&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now you can use view helper in your haml files like&lt;/p&gt;
+&lt;pre class="highlight haml"&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;content_for&lt;/span&gt; &lt;span class="ss"&gt;:toolbar&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;video_link&lt;/span&gt; &lt;span class="s1"&gt;'Vimeo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="s1"&gt;'https://vimeo.com/92406233'&lt;/span&gt;
+  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;video_link&lt;/span&gt; &lt;span class="s1"&gt;'Youtube'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'http://www.youtube.com/user/Bulutfon'&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;If you want to make global change, you just modify the helper file. For example add &lt;code&gt;btn btn-default&lt;/code&gt; css class all video links.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;# app/helpers/app_custom_helper.rb&lt;/span&gt;
+&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;AppCustomHelper&lt;/span&gt; 
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;video_link&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+    &lt;span class="n"&gt;capture_haml&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;haml_concat&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;target: &lt;/span&gt;&lt;span class="s1"&gt;'_blank'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'btn btn-default'&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;If we don&amp;rsquo;t use rails view helpers, we should add &lt;code&gt;class: &amp;#39;btn btn-default&amp;#39;&lt;/code&gt; code to all page.&lt;/p&gt;
+
+&lt;p&gt;Resource&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="http://haml.info/docs/yardoc/Haml/Helpers.html#capture_haml-instance_method"&gt;http://haml.info/docs/yardoc/Haml/Helpers.html#capture&lt;em&gt;haml-instance&lt;/em&gt;method&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://haml.info/docs/yardoc/Haml/Helpers.html#haml_concat-instance_method"&gt;http://haml.info/docs/yardoc/Haml/Helpers.html#haml&lt;em&gt;concat-instance&lt;/em&gt;method&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
+  <entry>
+    <title>RabbitMQ 1 - RabbitMQ ile Merhaba Dünya Örneği</title>
+    <link rel="alternate" href="http://lab2023.com/rabbitmq-hello-world-ornegi.html"/>
+    <id>http://lab2023.com/rabbitmq-hello-world-ornegi.html</id>
+    <published>2014-04-21T00:00:00Z</published>
+    <updated>2014-05-03T17:35:58+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Bir önceki makalemizde aşağıdaki konulardan bahsettik;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RabbitMQ nedir?&lt;/li&gt;
+&lt;li&gt;Özellikleri nedir?&lt;/li&gt;
+&lt;li&gt;Kimler kullanmalıdır?&lt;/li&gt;
+&lt;li&gt;Kurulumu nasıl yapılmalıdır?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Şimdi basit bir &amp;lsquo;Merhaba Dünya&amp;rsquo; uygulaması ile RabbitMQ&amp;#39;da ilk mesajımızı gönderecek ve alacağız. Aşağıdaki grafik yapılacak işlemi gösterecektir.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Örnek 1" width="392" height="59" src="assets/images/articles/2013-04-20-rabbitmq-1.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Mesajın gönderilmesi&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RabbitMQ&amp;#39;ya bağlanmak için&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class="c1"&gt;# encoding: utf-8&lt;/span&gt;
+
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;"bunny"&lt;/span&gt;
+
+&lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Bunny&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:automatically_recover&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;start&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Yeni bir kanal yaratmak için&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;ch&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;create_channel&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Yaratılan kanaldan bir queue isimlendirip mesaj göndermek için&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;q&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"hello"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;default_exchange&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello World!"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:routing_key&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [x] Sent 'Hello World!'"&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Bağlantıyı kapatmak için&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;close&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hepsini birleştirip &lt;code&gt;sender.rb&lt;/code&gt; dosyasını oluşturalım.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class="c1"&gt;# encoding: utf-8&lt;/span&gt;
+
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;"bunny"&lt;/span&gt;
+
+&lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Bunny&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:automatically_recover&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;start&lt;/span&gt;
+
+&lt;span class="n"&gt;ch&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;create_channel&lt;/span&gt;
+
+&lt;span class="n"&gt;q&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"hello"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;default_exchange&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello World!"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:routing_key&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [x] Sent 'Hello World!'"&lt;/span&gt;
+
+&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;close&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Mesajın alınması&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RabbitMQ&amp;#39;a bağlanmak, yeni bir kanal açmak ve kuyruğu tanımlamak için&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class="c1"&gt;# encoding: utf-8&lt;/span&gt;
+
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;"bunny"&lt;/span&gt;
+
+&lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Bunny&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:automatically_recover&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;start&lt;/span&gt;
+
+&lt;span class="n"&gt;ch&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;create_channel&lt;/span&gt;
+&lt;span class="n"&gt;q&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"hello"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Mesajları dinlemek için &lt;code&gt;Bunny::Queue#subscribe&lt;/code&gt; methodu kullanılır.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
+  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [*] Waiting for messages. To exit press CTRL+C"&lt;/span&gt;
+  &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:block&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;delivery_info&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [x] Received &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;rescue&lt;/span&gt; &lt;span class="no"&gt;Interrupt&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;
+  &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;close&lt;/span&gt;
+  &lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hepsini birleştirip &lt;code&gt;receiver.rb&lt;/code&gt; dosyasını oluşturalım.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class="c1"&gt;# encoding: utf-8&lt;/span&gt;
+
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;"bunny"&lt;/span&gt;
+
+&lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Bunny&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:automatically_recover&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;start&lt;/span&gt;
+
+&lt;span class="n"&gt;ch&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;create_channel&lt;/span&gt;
+&lt;span class="n"&gt;q&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ch&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"hello"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;begin&lt;/span&gt;
+  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [*] Waiting for messages. To exit press CTRL+C"&lt;/span&gt;
+  &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:block&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;true&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;delivery_info&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;" [x] Received &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;rescue&lt;/span&gt; &lt;span class="no"&gt;Interrupt&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;
+  &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;close&lt;/span&gt;
+  &lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Terminalden dosyaları çalıştıralım.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Unutmayın ayrı ayrı sekmelerde çalıştıracaksınız!&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;ruby -rubygems send.rb
+&lt;span class="gp"&gt;$ &lt;/span&gt;ruby -rubygems receive.rb
+&lt;/pre&gt;
+
+&lt;p&gt;Sonuçları terminal çıktılarından görebileceğiniz gibi &lt;code&gt;http://localhost:15672/&lt;/code&gt; adresinden veya terminalden &lt;code&gt;rabbitmqctl list_queues&lt;/code&gt; kodu ile de görebilirsiniz.&lt;/p&gt;
+
+&lt;p&gt;Bundan sonraki makalemiz RabbitMQ ve iş kuyrukları üzerine olacaktır.&lt;/p&gt;
+
+&lt;p&gt;Saygılar.&lt;/p&gt;
+
+&lt;h3&gt;Kaynaklar&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.rabbitmq.com/tutorials/tutorial-one-ruby.html"&gt;https://www.rabbitmq.com/tutorials/tutorial-one-ruby.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>RabbitMQ ile AMQP standartında mesajlaşma sistemine hızlı bir giriş</title>
+    <link rel="alternate" href="http://lab2023.com/rabbitmq.html"/>
+    <id>http://lab2023.com/rabbitmq.html</id>
+    <published>2014-04-20T00:00:00Z</published>
+    <updated>2014-05-03T17:35:58+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;h3&gt;RabbitMQ nedir?&lt;/h3&gt;
+
+&lt;p&gt;RabbitMQ, &lt;a href="http://www.gopivotal.com/"&gt;Pivotal&lt;/a&gt; firması tarafından Erlang programlama dili ile geliştirilen &lt;a href="http://www.amqp.org/"&gt;AMQP&lt;/a&gt; standartlarına göre geliştirilmiş robust mesajlaşma sistemidir.&lt;/p&gt;
+
+&lt;h3&gt;Kimler kullanmalı?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Ölçeklenebilir uygulamalar yapmak istiyenler.&lt;/li&gt;
+&lt;li&gt;Birden fazla uygulamayı belli bir standartta haberleştirmek isteyenler.&lt;/li&gt;
+&lt;li&gt;Uygulamanızdaki resim işleme, rapor oluşturma gibi uzun süren işleri arka planda yapmak isteyenler.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Öne çıkan özellikleri&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Robust mesajlaşma&lt;/li&gt;
+&lt;li&gt;Kullanım kolaylığı&lt;/li&gt;
+&lt;li&gt;Geniş bir işletim sistemini üzerinde çalıştırılabilmesi&lt;/li&gt;
+&lt;li&gt;Geniş bir geliştirme platformunu desteklemesi&lt;/li&gt;
+&lt;li&gt;Açık kaynaklı ve ticari desteğinin bulunması&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Terminoloji&lt;/h3&gt;
+
+&lt;p&gt;Kurulum ve örneklere geçmeden önce RabbitMQ ve mesajlaşma ile ilgili bir kaç tanımı belirtmekte fayda vardır.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Producer&lt;/strong&gt;, mesajı gönderen taraftır. &lt;code&gt;P&lt;/code&gt; ile gösterilir.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Queue&lt;/strong&gt;, mesajların biriktiği havuzdur. Bir nevi mailbox gibi düşünülebilir.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consumer&lt;/strong&gt;, mesajı alan taraftır. &lt;code&gt;C&lt;/code&gt; ile gösterilir.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;NOT: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Producer, Queue ve Consumerlar aynı makine üzerinde olmak zorunda değildir.&lt;/li&gt;
+&lt;li&gt;Producer ve Consumerlar aynı programlama dili ile yazılmak zorunda değildir.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Kurulum&lt;/h3&gt;
+
+&lt;p&gt;Bu makalede sadece OSX için Homebrew ile kurulumu anlatılacaktır. İleri tarihte belki Ubuntu sunucular da eklenebilir.&lt;/p&gt;
+
+&lt;p&gt;Bu örneği Ruby dilinde yapacağız. RabbitMQ&amp;#39;nun Ruby Client&amp;#39;ı olarak &lt;a href="http://rubybunny.info/"&gt;Bunny&lt;/a&gt;&amp;lsquo;i gemini kullanabiliriz. Bunny&amp;#39;i kurmak için &lt;code&gt;gem install bunny&lt;/code&gt; demeniz yeterlidir.&lt;/p&gt;
+
+&lt;h3&gt;OSX&amp;#39;e Homebrew ile kurulumu&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;brew update
+brew install rabbitmq
+&lt;/pre&gt;
+
+&lt;p&gt;Çıktı&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;==&amp;gt; Downloading http://www.rabbitmq.com/releases/rabbitmq-server/v3.3.0/rabbitmq-server-mac-standalone-3.3.0.tar.gz
+######################################################################## 100.0%
+==&amp;gt; /usr/bin/unzip -qq -j /usr/local/Cellar/rabbitmq/3.3.0/plugins/rabbitmq_management-3.3.0.ez rabbitmq_management-3.3.0/priv/www/cli/rabbitmqadmin
+==&amp;gt; Caveats
+Management Plugin enabled by default at http://localhost:15672
+
+Bash completion has been installed to:
+  /usr/local/etc/bash_completion.d
+
+To have launchd start rabbitmq at login:
+    ln -sfv /usr/local/opt/rabbitmq/*.plist ~/Library/LaunchAgents
+Then to load rabbitmq now:
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+Or, if you don't want/need launchctl, you can just run:
+    rabbitmq-server
+==&amp;gt; Summary
+    /usr/local/Cellar/rabbitmq/3.3.0: 1002 files, 26M, built in 119 seconds
+&lt;/pre&gt;
+
+&lt;p&gt;Yukarıdaki çıktıdan anlaşıldığı gibi dikkat edilmesi gereken bir kaç konu vardır.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Eğer işletim sisteminin açılışında RabbitMQ çalışacak ise aşağıdaki kodları çalıştırmanız gerekmektedir.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight shell"&gt;ln -sfv /usr/local/opt/rabbitmq/&lt;span class="k"&gt;*&lt;/span&gt;.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Eğer RabbitMQ&amp;#39;yu manuel çalıştıracaksanız aşağıdaki kodu çalıştırmanız yeterlidir.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="highlight shell"&gt;rabbitmq-server
+&lt;/pre&gt;
+
+&lt;p&gt;Eğer &lt;code&gt;rabbitmq-server&lt;/code&gt; komutunu OSX bulamadı ise &lt;code&gt;$PATH&lt;/code&gt;&amp;#39;nizde &lt;code&gt;/user/local/sbin&lt;/code&gt; tanımlı olmayabilir. &lt;code&gt;echo $PATH&lt;/code&gt; komutu ile olup olmadığını kontrol edebilirsiniz. Eğer yoksa &lt;code&gt;/usr/local/sbin&lt;/code&gt;&amp;#39;i &lt;code&gt;$PATH&lt;/code&gt;&amp;#39;inize eklemelisiniz çünkü Brew RabbitMQ&amp;#39;yu oraya kurmaktadır.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;rabbitmq-server&lt;/code&gt; komutunu çalıştırdıktan sonra &lt;code&gt;http://localhost:15672/&lt;/code&gt; adresinden yönetim paneline girebilirsiniz. Varsayılan ayarlarda aynı makineden bağlanabilmesi kaydı ile &lt;code&gt;guest&lt;/code&gt; kullanıcı ismi ve &lt;code&gt;guest&lt;/code&gt; şifresi ile bir kullanıcı tanımlanmıştır.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;URL : http://localhost:15672/&lt;/li&gt;
+&lt;li&gt;Kullanıcı adı : guest&lt;/li&gt;
+&lt;li&gt;Kullanıcı şifresi : guest&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Geliştirme ortamımızı kurduğumuza göre RabbitMQ sitesinde bulunan &lt;a href="https://www.rabbitmq.com/getstarted.html"&gt;altı adet örnek uygulamayı&lt;/a&gt; yapmaya geçebiliriz.&lt;/p&gt;
+
+&lt;p&gt;Saygılar.&lt;/p&gt;
+
+&lt;h3&gt;Kaynaklar&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://en.wikipedia.org/wiki/RabbitMQ"&gt;http://en.wikipedia.org/wiki/RabbitMQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.rabbitmq.com/install-homebrew.html"&gt;https://www.rabbitmq.com/install-homebrew.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>How To Use WebSockets With Pusher</title>
+    <link rel="alternate" href="http://lab2023.com/how-to-use-websockets-with-pusher.html"/>
+    <id>http://lab2023.com/how-to-use-websockets-with-pusher.html</id>
+    <published>2014-04-18T00:00:00Z</published>
+    <updated>2014-05-03T17:35:58+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;WebSocket technologies has started to become very popular recently. You can create real-time games, chat services etc.
+with using WebSocket. But even it isn&amp;rsquo;t a new technology some browsers doesn&amp;rsquo;t support it.&lt;/p&gt;
+
+&lt;p&gt;Instead of  sending periodically AJAX request, you can create a persistent connection between client and server and you
+can provide that server send messages to clients by this way clients listens to server asynchronously.&lt;/p&gt;
+
+&lt;p&gt;There is a lot of way to user WebSocket connections. You can develop your own WebSocket and you can build libraries
+with using browsers native APIs. But if you do this you will need to create different protocols for different browsers.&lt;/p&gt;
+
+&lt;p&gt;Thus, there is a lot of SAAS applications which you can integrate more quick and easy. Pusher is one of these services.
+I want to introduce this service to you and show how to implement Pusher with Ruby and JavaScript.&lt;/p&gt;
+
+&lt;h3&gt;Pusher what provides?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pusher works as a proxy between client and server.&lt;/li&gt;
+&lt;li&gt;Pusher APIs can used by many server and client side languages such as JavaScript,
+Ruby, PHP, Python, Node.js, Java, iOS, Android, Flash etc.&lt;/li&gt;
+&lt;li&gt;If you are work in browser that doesn&amp;rsquo;t support WebSocket, Pusher automatically gets activated Flash-based version.
+In this way, Pusher will work good for old generation web browsers.&lt;/li&gt;
+&lt;li&gt;If you don&amp;rsquo;t use only WebSocket communication, Pusher give good RESTful API for you.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;How to use Pusher?&lt;/h3&gt;
+
+&lt;p&gt;First you must create a new &lt;a href="https://app.pusherapp.com/accounts/sign_up"&gt;Pusher Account&lt;/a&gt;
+Then the service will ask you to create an App and after you create App you can take API Keys.&lt;/p&gt;
+
+&lt;p&gt;The following lines allow client enables connected the specified channel.&lt;/p&gt;
+&lt;pre class="highlight html"&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Pusher Test&lt;span class="nt"&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;script &lt;/span&gt;&lt;span class="na"&gt;src=&lt;/span&gt;&lt;span class="s"&gt;"http://js.pusher.com/2.2/pusher.min.js"&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;"text/javascript"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;script &lt;/span&gt;&lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;"text/javascript"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;pusher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Pusher&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'your_api_key'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;channel&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;pusher&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'test_channel'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;To listen for incoming messages&amp;hellip;&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;&lt;span class="nx"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"my-event"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;You can use following lines to publish messages by the little ruby server app.
+This is a simple Sinatra app. Next step you can save the file name &lt;code&gt;socket-app.rb&lt;/code&gt;
+and run this command &lt;code&gt;$ ruby socket-app.rb&lt;/code&gt; in the console.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'sinatra'&lt;/span&gt;
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'pusher'&lt;/span&gt;
+
+&lt;span class="no"&gt;Pusher&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"http://your_api_key:your_secret_key@api.pusherapp.com/apps/your_app_id"&lt;/span&gt;
+
+&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="s1"&gt;'/hi'&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="no"&gt;Pusher&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'test_channel'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;trigger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'my_event'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="ss"&gt;message: &lt;/span&gt;&lt;span class="s1"&gt;'hello world'&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="s2"&gt;"Success!"&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s all.&lt;/p&gt;
+
+&lt;p&gt;The Pusher &lt;a href="http://pusher.com/"&gt;website&lt;/a&gt; provides good documentation, a selection of tutorials for Ruby and JavaScript.&lt;/p&gt;
+
+&lt;p&gt;For more information &lt;a href="http://pusher.com/"&gt;http://pusher.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Regards.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>How To Parse Excel Spreadsheets in Rails</title>
+    <link rel="alternate" href="http://lab2023.com/how-to-parse-excel-spreadsheets-in-rails.html"/>
+    <id>http://lab2023.com/how-to-parse-excel-spreadsheets-in-rails.html</id>
+    <published>2014-03-26T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Parsing Excel spreadsheets in Rails is a quite simple task with the gem called Roo. Let’s do it step by step.&lt;/p&gt;
+
+&lt;p&gt;First off, you must include Roo gem in your Gemfile and install it:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;'roo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'~&amp;gt; 1.13.2'&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class="highlight shell"&gt;bundle install
+&lt;/pre&gt;
+
+&lt;p&gt;Opening an Excel spreadsheet is deadly simple:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Roo&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Excel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#or&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Roo&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Excelx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This file instance has rows in itself. You can access them with row numbers:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;row&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Gives first row&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;row&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Gives second row&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Also you can access row numbers for the first and last:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;first_row&lt;/span&gt; &lt;span class="c1"&gt;# Gives first row’s number, usually it’s 1&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;last_row&lt;/span&gt;  &lt;span class="c1"&gt;# Gives last row’s number&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Each row is an array, so you can access with index, like:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;row&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# Gives the first value in the first row&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;row&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# Gives the second value in the first row&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now I would like to show a real life example with model relations. Let’s suppose we have a list which has many nodes. We are going to parse values from Excel spreadsheet and create nodes with these values which belongs to a list. Let’s take a look at models:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;List&lt;/span&gt;  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;ActiveRecord&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Base&lt;/span&gt;
+  &lt;span class="n"&gt;has_many&lt;/span&gt; &lt;span class="ss"&gt;:nodes&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Node&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;ActiveRecord&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Base&lt;/span&gt;
+  &lt;span class="n"&gt;belongs_to&lt;/span&gt; &lt;span class="ss"&gt;:list&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now we must add a method to List model in order to parse our spreadsheet:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;List&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;ActiveRecord&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Base&lt;/span&gt;
+  &lt;span class="n"&gt;has_many&lt;/span&gt; &lt;span class="ss"&gt;:nodes&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Roo&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Excel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;last_row&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+      &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;row&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;node&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;attribute1: &lt;/span&gt;&lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;attribute2: &lt;/span&gt;&lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Depends on your needs&lt;/span&gt;
+      &lt;span class="n"&gt;node&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;node&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;valid?&lt;/span&gt; &lt;span class="c1"&gt;# Make sure to use validations&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;You can also use Paperclip attachment to get file, like &lt;strong&gt;self.attachment&lt;/strong&gt;. And it’s better if you use opening handler to support different types of Excel spreadsheets.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;open_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="no"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;extname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;original_filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="s1"&gt;'.xls'&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="no"&gt;Roo&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Excel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="s1"&gt;'.xlsx'&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="no"&gt;Roo&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Excelx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="s2"&gt;"Unknown file type: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;original_filename&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now use it in the parser method:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;open_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Last of all you might want to put &lt;strong&gt;open_file&lt;/strong&gt; method under private. Now it&amp;rsquo;s up to you when to use parser method. You can use it in basic model callbacks or observers.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Milliyet Gazatesi - PAÜ'de Geleceğin Simülasyonu Etkinliği</title>
+    <link rel="alternate" href="http://lab2023.com/milliyet-gazatesi.html"/>
+    <id>http://lab2023.com/milliyet-gazatesi.html</id>
+    <published>2014-03-06T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;img alt="items" width="643" height="1019" src="assets/images/articles/2014-03-06-milliyet-gazetesi.png" /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Sass Nedir? Özellikleri nelerdir?</title>
+    <link rel="alternate" href="http://lab2023.com/sass-nedir-ozellikleri-nelerdir.html"/>
+    <id>http://lab2023.com/sass-nedir-ozellikleri-nelerdir.html</id>
+    <published>2014-03-03T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Sass genel olarak css derleyicisidir. Css sayesinde var olmuş fakat css’i teknik olarak geçmeyi başarmıştır. Nasıl geçmiş kısaca özetliyorum;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Css’in değişken tanımlanılabilinen hali (Variables)&lt;/li&gt;
+&lt;li&gt;Css’in tarayıcılar için yazdığımız ekstra kodları kendisi oluşturabilen hali(Mixins)&lt;/li&gt;
+&lt;li&gt;Css’in girintileri fark ederek iç içe class’ları yazabilen hali (Nesting)&lt;/li&gt;
+&lt;li&gt;Css dosyasında istediğimiz kodları istediğimiz yerde extend edebiliyoruz (Extend/Inheritance)&lt;/li&gt;
+&lt;li&gt;Css dosyamızı parçalara ayırıp, ayırdığımız kısımları istediğimiz yerde çağırabiliyoruz (İmport)&lt;/li&gt;
+&lt;li&gt;Css dosyamızda çarpma,bölme toplama vs. yapabiliyorz. (Operators)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Şimdi artılarını açıklamaya çalışacağım.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Özellikleri&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Variables:&lt;/strong&gt; Sass’ta değişken tanımlayabildiğimizi söylemiştik. Örneğe bakalım.&lt;/p&gt;
+
+&lt;p&gt;Değişkenleri tanımlıyoruz.&lt;/p&gt;
+&lt;pre class="highlight sass"&gt;&lt;span class="nv"&gt;$header-font-style&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;  &lt;span class="n"&gt;Helvetica&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;sans-serif&lt;/span&gt;
+&lt;span class="nv"&gt;$header-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#000&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Değişkenleri kullanıyoruz.&lt;/p&gt;
+&lt;pre class="highlight sass"&gt;&lt;span class="nc"&gt;.header&lt;/span&gt;
+  &lt;span class="nl"&gt;font&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nv"&gt;$header-font-style&lt;/span&gt;
+  &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nv"&gt;$header-color&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Nesting:&lt;/strong&gt; Nesne girintilerine göre kod yazmak.&lt;/p&gt;
+&lt;pre class="highlight sass"&gt;&lt;span class="nn"&gt;#nav&lt;/span&gt;
+  &lt;span class="nt"&gt;ul&lt;/span&gt;
+   &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;red&lt;/span&gt;
+  &lt;span class="nt"&gt;li&lt;/span&gt;
+   &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;blue&lt;/span&gt;
+  &lt;span class="nt"&gt;a&lt;/span&gt;
+   &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;green&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Css çıktısı:&lt;/p&gt;
+&lt;pre class="highlight css"&gt;&lt;span class="nf"&gt;#nav&lt;/span&gt; &lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;red&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nf"&gt;#nav&lt;/span&gt; &lt;span class="nt"&gt;li&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;blue&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nf"&gt;#nav&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nl"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;green&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Partials ve @import:&lt;/strong&gt; Kodlarımızı bölümleyip istediğimiz yerde import edebiliyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;/* _reset.sass */
+body
+ margin: 0
+ padding: 0
+&lt;/pre&gt;
+
+&lt;p&gt;Bu dosyayı asıl stil dosyamıza dahil edelim.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;/* base.sass */
+@import 'reset'
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Mixins:&lt;/strong&gt; bu özellik sayesinde css3 ün hayatımızı zor bir yoldan kolaylaştıran özelliklerini sıkılmadan uygulayabileceğiz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;@mixin border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  -o-border-radius: $radius
+  border-radius: $radius
+&lt;/pre&gt;
+
+&lt;p&gt;Mixin&amp;#39;i sass&amp;#39;da çağırıyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt; .box
+   @include border-radius(10px)
+&lt;/pre&gt;
+
+&lt;p&gt;Bu mixin&amp;#39;inden sonra border-radius kullandığımızda ekstra kodları yazmamıza gerek yok.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Extend/Inheritance:&lt;/strong&gt; class yada id&amp;#39;lerde kullandığımız özellikleri @extend özelliği ile bir sonraki class yada id mizin içinde kullanabiliyoruz.&lt;/p&gt;
+
+&lt;p&gt;message class&amp;#39;ı için kodlarımız bunlar.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;.message
+  border: 1px solid #ccc
+  padding: 10px
+  color: #333
+&lt;/pre&gt;
+
+&lt;p&gt;Şimdide diğer class yada id&amp;#39;mizde bu kodları extend edelim.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;.success
+  @extend .message
+  border-color: green
+
+.error
+  @extend .message
+  border-color: red
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Operators:&lt;/strong&gt; css özelliklerini yazarken operatorleri kullanabileceğimizi biliyor muydunuz? :)&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;aside
+ float: right
+ width: 300px / 960px * 100%
+&lt;/pre&gt;
+
+&lt;p&gt;Css çıktısı:&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;aside {
+ float: right;
+ width: 31.25%;
+  }
+&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Using Medium Editor as Input Field in Rails</title>
+    <link rel="alternate" href="http://lab2023.com/using-medium-editor-as-input-field-in-rails.html"/>
+    <id>http://lab2023.com/using-medium-editor-as-input-field-in-rails.html</id>
+    <published>2013-12-10T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Medium Editor is seriously a stunning WYSIWYG editor. Simple, stylish, easy to use… But you can also use it as an input field, with some Javascript magic :)&lt;/p&gt;
+
+&lt;p&gt;First off, you must include JS and CSS files of Medium Editor. It doesn’t matter if you use from CDN or local folders.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/daviferreira/medium-editor"&gt;https://github.com/daviferreira/medium-editor&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m using it in a form partial (one of my current projects).&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;=stylesheet_link_tag 'medium-editor.css'
+=javascript_include_tag 'medium-editor'
+
+= form_for @post do |f|
+  = f.hidden_field :body, html: { id: "body" }
+  .editable { data: { field: { id: "body" } } }
+  = f.submit
+
+=javascript_include_tag 'input-field'
+&lt;/pre&gt;
+
+&lt;p&gt;Normally you can just add &amp;ldquo;.editable&amp;rdquo; class on any element you like but you can&amp;rsquo;t do it for an input field. What I&amp;rsquo;ve done is, I just created my input field as hidden and a editable div with &lt;strong&gt;&lt;em&gt;data-field-id&lt;/em&gt;&lt;/strong&gt; is &amp;ldquo;body&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;IDs of input field and editable field must be same, so we can create a polymorphic system for synchronization. Let&amp;rsquo;s get to the &lt;strong&gt;&lt;em&gt;input-field.js&lt;/em&gt;&lt;/strong&gt; file.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;var editor = new MediumEditor('.editable');
+
+$('.editable').bind('input propertychange', function() {
+  $("#post_" + $(this).attr("data-field-id")).val($(this).html());
+});
+&lt;/pre&gt;
+
+&lt;p&gt;When you create a MediumEditor object with &amp;lsquo;.editable&amp;rsquo; class, all elements (except input fields) with &amp;lsquo;.editable&amp;rsquo; class will turn into Medium Editor.&lt;/p&gt;
+
+&lt;p&gt;Real magic we&amp;rsquo;ll use is &amp;ldquo;bind&amp;rdquo; method of HTML elements. (Also I must warn you that you must include standard jQuery libraries). When a editable class element is changed, inner code of bind method will run. This way we&amp;rsquo;ll get the editable element&amp;rsquo;s &lt;strong&gt;&lt;em&gt;data-field-id&lt;/em&gt;&lt;/strong&gt; and concatenate it with &amp;ldquo;#post_&amp;rdquo; string.&lt;/p&gt;
+
+&lt;p&gt;Then we set the value of &amp;ldquo;#post_element&amp;rdquo; with editable class element&amp;rsquo;s inner HTML. If you keep the names of hidden element and editable section same, you get a polymorphic synchronization. So you can use multiple Medium Editor input fields.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>2D Karakter Tasarımı ve Animasyon Outsource İş İlanı</title>
+    <link rel="alternate" href="http://lab2023.com/2d-karakter-tasarimi-ve-animasyon-outsource-is-ilani.html"/>
+    <id>http://lab2023.com/2d-karakter-tasarimi-ve-animasyon-outsource-is-ilani.html</id>
+    <published>2013-11-04T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Merhaba,&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;&lt;strong&gt;&lt;a href="http://www.lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani"&gt;3D Karakter Modelleme ve Animasyon Outsource İş İlanı&lt;/a&gt;&lt;/strong&gt;&amp;rdquo; başlığı ile &lt;a href="http://www.lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani"&gt;http://www.lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani&lt;/a&gt; adresinden daha önce duyurduğumuz outsource iş ilanımızla ilgili bize gelen &lt;strong&gt;2D çalışma tekliflerini&lt;/strong&gt; de değerlendirmeye almaya karar verdik. Bu bakımdan önceki ilanımızı revize ediyoruz.&lt;/p&gt;
+
+&lt;p&gt;İlgilenen tasarımcı arkadaşlar ana detayları &lt;a href="http://www.lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani"&gt;http://www.lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani&lt;/a&gt; adresinde belirtilen şekilde bize aynı iş için &lt;strong&gt;2D tekliflerini&lt;/strong&gt; de gönderebilirler.&lt;/p&gt;
+
+&lt;h4&gt;2D Çalışma ile ilgili ilave notlar&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Çalışmayı Adobe After Effects programını kullanarak yapıyor olmanız bizim için tercih sebebi olacaktır.&lt;/li&gt;
+&lt;li&gt;  Çalışma After Effects kaynak dosyaları ile birlikte teslim edilmelidir.&lt;/li&gt;
+&lt;li&gt;  Ayrıca çalışmada kullanılan görsellerin Adobe Photoshop veya Adobe Illustrator programındaki kaynak dosyalarını da bizimle paylaşmanızı isteyeceğiz.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;İlgililere duyurulur.&lt;/p&gt;
+
+&lt;p&gt;İlgilenen arkadaşlar bize &lt;strong&gt;0 258 215 5010&lt;/strong&gt; nolu telefondan veya &lt;strong&gt;Tayfun Öziş ERİKAN - tayfun.ozis.erikan[at]lab2023.com&lt;/strong&gt; adresinden konu hakkında iletişime geçebilirler.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>3D Karakter Modelleme ve Animasyon Outsource İş İlanı</title>
+    <link rel="alternate" href="http://lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani.html"/>
+    <id>http://lab2023.com/3d-karakter-modelleme-ve-animasyon-outsource-is-ilani.html</id>
+    <published>2013-10-26T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;h2&gt;Tanım&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="http://www.lab2023.com"&gt;lab2023&lt;/a&gt; firması olarak bir projede kullanılmak üzere 3D Grafik karakter(ler) modellenmesi ve bu karakter(ler)e ait animasyonlara ihtiyacımız vardır. Bu işleri uzmanlık alanındaki kişilere outsource vermeye karar verdik. Bu bağlamda aşağıda ön detayları bulunan işi almak isteyen arkadaşlara veya firmalara bu ilanı yayınlamanızı ve eğer ilgi duyuyor iseniz bizimle iletişime geçmenizi rica ederiz.&lt;/p&gt;
+
+&lt;h2&gt;İhtiyaçlar ve Deadline&lt;/h2&gt;
+
+&lt;p&gt;Teklif birim fiyatını belirlemek adına sizden 1 adet Aslan karakteri modellemeniz istenecektir. Bu çalışmanızın ardından talep edilen toplam 4 adet diğer hayvanlar da sizinle paylaşılacaktır. Bu modelleme gerçeğe yakın olacak ve ilgili hayvana bir karakter yüklenecektir.&lt;/p&gt;
+
+&lt;p&gt;Nihai sonuç için &lt;a href="http://www.imdb.com/title/tt0351283/"&gt;Madagascar&lt;/a&gt; veya &lt;a href="http://www.imdb.com/title/tt0479952/"&gt;Madagascar: Escape 2 Africa&lt;/a&gt; filmindeki Alex karakterini veya diğer Aslanları referans alabilirsiniz. Karakterleri &lt;a href="http://www.madagascar-themovie.com/"&gt;şu adresten&lt;/a&gt; veya &lt;a href="https://www.google.com/search?q=madagascar+movie&amp;amp;amp;tbm=isch"&gt;şuradaki Google görsellerinden&lt;/a&gt; inceleyebilirsiniz. Karakterler yaklaşık olarak bu filmdeki gerçeklilik ve sempatiye sahip olmalıdır.&lt;/p&gt;
+
+&lt;p&gt;Karakter modellemesi haricinde karaktere kendine özgü hareketler de yaptırılacaktır. Bu bakımdan karakterin bu davranışlarının max. 5&amp;#39;er saniyeyi geçmemeyecek animasyonlar haline getirilmesi istenmektedir. Doğal olarak karakterin bir iskelet sistemine sahip olması beklenmektedir.&lt;/p&gt;
+
+&lt;h3&gt;Karakter için istenilen referans hareketler ve olaylar&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Beslenme: Kendisine verilen bir büyük bir biftek parçasını yakalama ve onu yeme.&lt;/li&gt;
+&lt;li&gt;  Acıkma: Ekrana vurarak ve ses çıkararak açıktığını belirtme.&lt;/li&gt;
+&lt;li&gt;  Uyuma: Bulunduğu alanda sakin bir şekilde uyuklama-dinlenme halinde bekleme.&lt;/li&gt;
+&lt;li&gt;  Sevilme ve mutlu olma: Sahibi tarafından sevildiğini gösteren bir ibare.&lt;/li&gt;
+&lt;li&gt;  Saklanma: Ekranın herhangi bir bölgesine saklanma.&lt;/li&gt;
+&lt;li&gt;  Kendine özgü bir hareket yapma: Aslan karakteri için ses çıkararak Kükremek.&lt;/li&gt;
+&lt;li&gt;  Gıdıklanma ve gülme&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ortam&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Karakter kendine uygun bir ortamda bulunacaktır. Kaplan için Ormanlık bir alanda arkaplanda bitki ve ağaçların olduğu ön planda da bir topraklık alanda hayvanın bulunması sağlanabilir. Bunun için yine &lt;a href="http://www.imdb.com/title/tt0351283/"&gt;Madagascar&lt;/a&gt; veya &lt;a href="http://www.imdb.com/title/tt0479952/"&gt;Madagascar: Escape 2 Africa&lt;/a&gt; filmindeki atmosferi referans alabilirsiniz.&lt;/p&gt;
+
+&lt;p&gt;Yukarıda bahsi geçen 1 adet karakterin ve karakterin kendine ait doğal ortamının realistik ve sempatik şekilde modellenmesi, istenilen davranış biçimlerinde animasyonunun hazırlnaması için sizden bir deadline belirleneminizi rica ediyoruz.&lt;/p&gt;
+
+&lt;h2&gt;Çalışma şekli&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Çalışmalar dropbox üzerinden source kodları ile alınır. İlgili source kodların lisansları müşterimize ait olacaktır.&lt;/li&gt;
+&lt;li&gt;  Pre-production aşamasında çalışmalar bir onay mekanizmasından geçmelidir. Yani çalışmayı yapmadan önce mutlaka ama mutlaka bize bir eskiz şeklinde çizim göndermeniz ve animasyonlar için story board hazırlamanız gerekmektedir. Biz yaptık budur gibi oldu bitti olmamalıdır.&lt;/li&gt;
+&lt;li&gt;  Çalışmaların tercihen popüler bir 3D modelleme programların yapılması beklenmektedir.&lt;/li&gt;
+&lt;li&gt;  3D Studio Max tercihimizdir ancak Maya ile çalışacağız derseniz karşı çıkmayız. Organik modelleme için ayrıca ZBrush kullanıyorsanız bunu yadırgamayız. Ancak pek popüler olmayan bir program ile çalışırsanız bizim için kaynak kodları düzenlemek veya düzenletmek adına problem çıkabileceğinden tercih sebebi olmayacaktır. Eğer 3Ds Max kullanacaksanız sizinle aynı dili konuşur ve daha iyi anlaşabiliriz.&lt;/li&gt;
+&lt;li&gt;  Post-production kapmsamındaki görsel efekler, renk, kesme kırpma v.b. ayarlamalar için ise Adobe Premiere ve Adobe After Effect kullanıyorsanız sizinle aynı dili konuşur ve daha iyi anlaşabiliriz.&lt;/li&gt;
+&lt;li&gt;  Modellere ve animasyonlara 3. parti modeller, dokular, render kütüphaneleri, scriptler v.b. dahil edecekseniz bunların kaynaklarını belirtmenizi ve lisanslarını mutlaka ama mutlaka bizimle paylaşmanızı rica edeceğiz.&lt;/li&gt;
+&lt;li&gt;  Yine aynı şekilde animasyonlarda kullanılacak sesler veya ses efektleri lisansa tabi olmalıdır.&lt;/li&gt;
+&lt;li&gt;  Biz firma olarak 3. parti kaynak kullanımındaki lisans konularında hassasız, sizlerin de aynı özeni göstereceğinizden emin olmamız gerekmektedir.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Ödeme Süreçleri Penaltı ve Deadline&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Bizler müşterilerimiz ile nasıl sözleşme ve ödeme planı uyguluyorsak aynı süreç burada da gerçekleşecektir.&lt;/li&gt;
+&lt;li&gt;  %25 Peşinat, işin bitiş oranına göre iki haftalık veya aylık olarak ödeme yapılacaktır. İşin %70&amp;#39;i bittiyse %70 oranında ödemenizi alacaksınız.&lt;/li&gt;
+&lt;li&gt;  İki taraflarda yükümlülüklerine uymazsa bir cezai yaptırım olacaktır. Bizler ödemeleri gününde, sizlerde iş teslim tarihine uymazsanız günlük olarak bir cezai yaptırım olacaktır.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Gizlilik Sözleşmesi&lt;/h2&gt;
+
+&lt;p&gt;Teklifinizin 2. aşamaya geçmesi halinde proje detaylarını sizinle paylaşacağımızdan fikri hakların korunması açısından aramızda bir gizlilik sözleşmesi imzalamamız gerekmektedir. Gizlilik sözleşmesi ile ilgili detaylar aşağıdaki gibidir.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Müşterimizin isteği doğrultusunda &lt;a href="https://dl.dropboxusercontent.com/u/54382764/matbuatlar/matbuat-gizlilik-sozlesmesi.pdf"&gt;gizlilik sözleşmesini&lt;/a&gt; indirip imzalayıp taranmasını, info[at]lab2023.com adresine email, aslınıda Pamukkale Üniversitesi Teknokent Z13 Kınıklı Denizli adresine göndermenizi rica ediyoruz.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;İlgili belgeler bize ulaştıktan sonra projenin ve yapılacak grafik işlerinin detaylarını içeren 4 sayfalık bir grafik ihtiyaç dosyasını istediğiniz email adresine ulaştıracağız.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Teklif vermeniz için bu döküman yeterli ise gizlilik sözleşmesini anlaşırsak verebilirsiniz ancak bu döküman dışında ki sorularınıza cevap alamayacaksınız.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Teklifleriniz&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Lütfen tekliflerinizi info[at]lab2023.com adresine gönderiniz.&lt;/li&gt;
+&lt;li&gt;  Teklifinizde freelancer olup olmadığınız, şuan bir firmada çalışıp çalışmadığınız, daha önceki çalışmalarınız, fatura kesip kesemeyeceğiz, daha önce hangi projelerde bulunduğunuz, ekip çalışmasına yatkınlığınız, CV&amp;#39;niz, blog adresiniz, varsa Dribbble, Behance, iStockphoto v.b. portfolyo adresleriniz gibi sizi tanıyabileceğimiz bilgiler ayrıca &lt;strong&gt;deadline&lt;/strong&gt;, &lt;strong&gt;fiyat&lt;/strong&gt; olmalıdır.&lt;/li&gt;
+&lt;li&gt;  Anlaşmadan önce mutlaka ama mutlaka çalışmalarınızı ve tarzınızı görmemiz gerekmektedir. Örnek çalışmalarınızı mutlaka paylaşmanızı rica ediyoruz.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Örnekler ile ilgili linkler&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/title/tt0351283/"&gt;Madagascar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm3844768768/tt0351283"&gt;Örnek görüntü - 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm3207234560/tt0351283"&gt;Örnek görüntü - 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm2267710464/tt0351283"&gt;Örnek görüntü - 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm3106571264/tt0351283"&gt;Örnek görüntü - 4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/title/tt0479952/"&gt;Madagascar: Escape 2 Africa&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm285643776/tt0479952"&gt;Örnek görüntü - 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://www.imdb.com/media/rm235312128/tt0479952"&gt;Örnek görüntü - 2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;İlgilenen arkadaşlar bize &lt;strong&gt;0 258 215 5010&lt;/strong&gt; nolu telefondan veya &lt;strong&gt;Tayfun Öziş ERİKAN - tayfun.ozis.erikan[at]lab2023.com&lt;/strong&gt; adresinden konu hakkında iletişime geçebilirler.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Eğer ayrıca paylaşmak isterseniz dokümanın &lt;a href="http://www.lab2023.com/wp-content/uploads/2013/10/3d_modelleme_ve_animasyon_isleri_outsource.pdf"&gt;PDF halini buradan indirebilirsiniz.&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;İlgilenenlere şimdiden teşekkürler. İyi çalışmalar.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Paperclip gemi ile resimlere watermark ekleme</title>
+    <link rel="alternate" href="http://lab2023.com/paperclip-gemi-ile-resimlere-watermark-ekleme.html"/>
+    <id>http://lab2023.com/paperclip-gemi-ile-resimlere-watermark-ekleme.html</id>
+    <published>2013-09-27T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;a href="https://github.com/thoughtbot/paperclip"&gt;Paperclip&lt;/a&gt; gemi varsayılan olarak resimlere watermark eklemeyi desteklemiyor. Bu yüzden watermark ekleyebilmek için projeye, imagemagick&amp;#39;in resimleri birleştirme komutu olan &amp;lsquo;composite&amp;rsquo; i içeren bir processor eklememiz gerekiyor.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Öncelikle paperclip geminin processorları aradığı&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;lib/paperclip_processors
+&lt;/pre&gt;
+
+&lt;p&gt;klasörünün içine watermark.rb dosyamızı oluşturup&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;module Paperclip
+  class Watermark &amp;lt; Thumbnail
+    # Handles watermarking of images that are uploaded.
+    attr_accessor :format, :whiny, :watermark_path, :position
+
+    def initialize file, options = {}, attachment = nil
+      super
+      @file             = file
+      @whiny            = options[:whiny].nil? ? true : options[:whiny]
+      @format           = options[:format]
+      @watermark_path   = options[:watermark_path]
+      @position         = options[:watermark_position].nil? ? "SouthEast" : options[:watermark_position]
+
+      @current_format   = File.extname(@file.path)
+      @basename         = File.basename(@file.path, @current_format)
+    end
+
+    # Performs the conversion of the +file+ into a watermark. Returns the Tempfile
+    # that contains the new image.
+    def make
+      return @file unless watermark_path
+
+      dst = Tempfile.new([@basename, @format].compact.join("."))
+      dst.binmode
+
+      command = "composite"
+      params = "-gravity #{@position} #{watermark_path} #{fromfile} #{tofile(dst)}"
+
+      begin
+        success = Paperclip.run(command, params)
+      rescue PaperclipCommandLineError
+        raise PaperclipError, "There was an error processing the watermark for #{@basename}" if @whiny
+      end
+
+      dst
+    end
+
+    def fromfile
+      "\"#{ File.expand_path(@file.path) }[0]\""
+    end
+
+    def tofile(destination)
+      "\"#{ File.expand_path(destination.path) }[0]\""
+    end
+  end
+end
+&lt;/pre&gt;
+
+&lt;p&gt;şeklinde watermark classımızı ekliyoruz.&lt;/p&gt;
+
+&lt;p&gt;Ardından ilgili model dosyamızda&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;has_attached_file :photo,
+processors: [:thumbnail, :watermark],
+styles: {
+  zoom: { geometry: '1024x576#', watermark_path: "#{Rails.root}/app/assets/images/watermarks/watermark_zoom.png"},
+  main: { geometry: '770x520#', watermark_path: "#{Rails.root}/app/assets/images/watermarks/watermark_main.png"}
+}
+&lt;/pre&gt;
+
+&lt;p&gt;şeklinde eklediğimiz resimler için kullanılacak processorlerı tanımlıyoruz, thumbnail resimlerin boyutunu düzenlemek için paperclipte tanımlanmış processor classıdır eklenmediği sürece resim boyutlandırması yapılmaz. Ardından farklı boyutlar için yeniden boyutlandırma için geometry ve watermark olarak eklenecek resmimizin path&amp;#39;ini veriyoruz.&lt;/p&gt;
+
+&lt;p&gt;Bu işlemlerden sonra eklenecek her resime watermark&amp;#39;ınız eklenecektir.&lt;/p&gt;
+
+&lt;p&gt;Eğer daha önce upload ettiğiniz resimlere de watermark&amp;#39;ınızın eklenmesini istiyorsanız.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;rake paperclip:refresh class=Product
+&lt;/pre&gt;
+
+&lt;p&gt;rake&amp;#39;ini çalıştırmanız yeterlidir.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Taps ile MySQL' den PostgreSQL' e Veri Aktarma</title>
+    <link rel="alternate" href="http://lab2023.com/ruby-on-rails-taps-ile-mysql-den-postgresql-e-veri-aktarma.html"/>
+    <id>http://lab2023.com/ruby-on-rails-taps-ile-mysql-den-postgresql-e-veri-aktarma.html</id>
+    <published>2013-09-10T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Merhabalar,&lt;/p&gt;
+
+&lt;p&gt;Şirket olarak 8 ay önce PostgreSQL&amp;#39; e geçmiştik ama o zamanlar devam edegelen projeleri iş yoğunluğundan dolayı PostgreSQL&amp;#39; e geçiremedik. Aslında bu bizim için ek bir maliyetti. Şimdi tüm projelerimizi PostgreSQL&amp;#39; e geçirmeye başladık.&lt;/p&gt;
+
+&lt;p&gt;Bu işlemler için &lt;a href="https://github.com/ricardochimal/taps/"&gt;Taps&lt;/a&gt; gemini kullanıyoruz. Alternatif olarak &lt;a href="https://github.com/ddollar/valkyrie"&gt;Valkyrie&lt;/a&gt; geminide kullanabilirsiniz.&lt;/p&gt;
+
+&lt;p&gt;Taps&amp;#39; ta server ve client olarak iki kavram var. Veritabanınızın birisini server yapıyorsunuz diğerini client. Client olan veritabanında pull ve push işlemlerini yapıyoruz.&lt;/p&gt;
+
+&lt;h3&gt;Taps Server Oluşturma&lt;/h3&gt;
+
+&lt;p&gt;Terminali açıp aşağıdaki kodu çalıştırdığımızda server başlamış oluyor.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;taps server postgres://dbuser:dbpassword@localhost/dbname httpuser httppassword&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;Taps Client Oluşturma&lt;/h3&gt;
+
+&lt;p&gt;Başka bir terminal açıp aşağıdaki kodu çalıştırdığımızda MySQL veritabanındaki verileri PostgreSQL&amp;#39; e aktarmaya başlıyoruz.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;taps push mysql2://dbuser:dbpassword@localhost/dbname http://httpuser:httppassword@example.com:5000&lt;/code&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;push&lt;/code&gt; yerine &lt;code&gt;pull&lt;/code&gt; kullanırsak Server olan veritabanındaki verileri Client veritabanına almış oluruz.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Hangi veritabanı ile işlem yapacaksak o veritabanı adaptör geminin kurulu olması gerekmektedir. PostgreSQL için &lt;code&gt;pg&lt;/code&gt; MySQL için &lt;code&gt;mysql2&lt;/code&gt; gibi.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Client&amp;#39; taki httpuser httppassword server ile aynı olmalıdır.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;İyi çalışmalar dilerim.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Capistrano ile Multistage Deploy</title>
+    <link rel="alternate" href="http://lab2023.com/capistrano-ile-multistage-deploy.html"/>
+    <id>http://lab2023.com/capistrano-ile-multistage-deploy.html</id>
+    <published>2013-09-10T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Ürünlerimizi geliştirme aşamasında production ve staging olarak iki sunucuya deploy ediyoruz. Hafta bitiminde yaptığımız işleri staging sunucusuna deploy edip test edilmesini bekliyoruz. Onay geldiğinde ise production sunucusuna gönderiyoruz.&lt;/p&gt;
+
+&lt;p&gt;Deploy işlermlerinde bildiğiniz gibi capistrano kullanıyoruz. İşlemleri halihazırda capistrano kullandığınızı düşünerek anlatacağım.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;config/deploy.rb&lt;/code&gt; ye capistrano multistage extension ekliyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;# config/deploy.rb
+require 'capistrano/ext/multistage'
+&lt;/pre&gt;
+
+&lt;p&gt;ve hangi stage ler olacağını belirtiyoruz&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;# config/deploy.rb
+set :stages, %w(staging production)
+&lt;/pre&gt;
+
+&lt;p&gt;config altına deploy adında bir klasör oluşturup içerisine &lt;code&gt;production.rb&lt;/code&gt; ve &lt;code&gt;staging.rb&lt;/code&gt; dosyalarını oluşturuyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;# config/deploy/staging.rb
+server "156.0.0.0", :web, :app, :db, primary: true
+set :port, 1234
+set :rails_env, 'staging'
+
+namespace :deploy do
+  task :setup_config, roles: :app do
+    # Staging
+    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
+
+    sudo "ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}"
+  end
+end
+
+# config/deploy/production.rb
+server "156.0.0.0", :web, :app, :db, primary: true
+set :port, 1234
+set :rails_env, 'production'
+
+namespace :deploy do
+  task :setup_config, roles: :app do
+    # Production
+    sudo "ln -nfs #{current_path}/config/nginx-ssl.conf /etc/nginx/sites-enabled/#{application}"
+
+    sudo "ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}"
+  end
+end
+&lt;/pre&gt;
+
+&lt;p&gt;Kodlardan da anlaşılacağı gibi birbirinden farklı olacak şeyleri ayrı dosyalara taşıdık. Ortak olanlar ise &lt;code&gt;deploy.rb&lt;/code&gt; de kalıyor.&lt;/p&gt;
+
+&lt;p&gt;Deploy kodunuda şu şekilde çalıştırıyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;cap production deploy
+cap staging deploy
+&lt;/pre&gt;
+
+&lt;p&gt;veya&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;# config/deploy.rb
+set :default_stage, "staging"
+&lt;/pre&gt;
+
+&lt;p&gt;default stage belirtip&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;cap deploy
+&lt;/pre&gt;
+
+&lt;p&gt;yapıyoruz.&lt;/p&gt;
+
+&lt;p&gt;Kolaylıklar dilerim.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Github'a nasıl dosya gönderilir?</title>
+    <link rel="alternate" href="http://lab2023.com/githuba-nasil-dosya-gonderilir.html"/>
+    <id>http://lab2023.com/githuba-nasil-dosya-gonderilir.html</id>
+    <published>2013-08-26T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;   Github versiyon kontrol sistemleri için bir uzak depodur. Hızlı ve güvenli oluşu, kapsamlı raporlama yapısı ve çoklu çalışma kolaylığı ile birçok yazılımcının vazgeçilmezi olmuştur. Peki github nasıl kullanılır?&lt;/p&gt;
+
+&lt;p&gt;Şimdi github&amp;#39;da hesabınızı aldıktan sonra yeni bir repository (depo) oluşturmayı ve oluşturduğumuz repository&amp;#39;ye dosya göndermeyi§ anlatacağım.&lt;/p&gt;
+
+&lt;p&gt;İlk olarak github hesabımızda repository/new yada create a new repo&amp;#39;ya tıklayarak repomuzu oluşturuyoruz.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Newrepo" width="820" height="551" src="assets/images/articles/2013-08-26-newrepo.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Dizinimizi oluşturduktan sonra sıra var olan dosyalarımızı uzak depoya göndermeye geliyor.&lt;/p&gt;
+
+&lt;p&gt;Yukarıdaki adımları console yada terminalimizden sırasıyla uyguladığımızda ilk olarak&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;touch README.md
+&lt;/pre&gt;
+
+&lt;p&gt;README.md adında bir dosya oluşturuyor ve&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;git init
+&lt;/pre&gt;
+
+&lt;p&gt;komutuyla oluşturduğumuz dosyayı github&amp;#39;ın anlayacağı dile çeviriyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;git commit -m "first commit"
+&lt;/pre&gt;
+
+&lt;p&gt;bu satır dosyamızı staging&amp;#39; e taşıyor ve değişiklik kayıtları için commit mesajını bu satırda yazıyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;git remote add origin git@github.com:safiyesepetci/deneme.git
+&lt;/pre&gt;
+
+&lt;p&gt;bu satırda uzak depomuzun yolunu yazıyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;git push -u origin master
+&lt;/pre&gt;
+
+&lt;p&gt;bu son satırımızda dizimizi uzak depoya taşıyor.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>git-flow ve varsayılan branch master'dan farklı iken kullanımı</title>
+    <link rel="alternate" href="http://lab2023.com/git-flow-ve-varsayilan-branch-master-dan-farkli-iken-kullanimi.html"/>
+    <id>http://lab2023.com/git-flow-ve-varsayilan-branch-master-dan-farkli-iken-kullanimi.html</id>
+    <published>2013-08-01T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Projelerde birden fazla branch kullanımı çok doğal. Zaman zaman varsayılan branch master&amp;#39;dan farklı da olabiliyor. Bu gibi durumlarda, projeyi kendi üzerine yeni çeken kişi, git-flow initialize etmek istediğinde hata alıyor. Ancak bu problemi aşmak ve git-flow&amp;#39;u kullanabilmek mümkün.&lt;/p&gt;
+
+&lt;p&gt;Nasıl mı? İşte cevabı:&lt;/p&gt;
+
+&lt;p&gt;Örneğin varsayılan branch develop olduğunda projeyi checkout edelim. Hemen ardından, git-flow initialize etmek istersek aşağıdaki hatayı alıyoruz.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;#git flow init
+
+Which branch should be used for bringing forth production releases?
+   - develop
+Branch name for production releases: []
+Local branch '' does not exist.
+&lt;/pre&gt;
+
+&lt;p&gt;Panik yapıp işleri karıştırmaya, hataya kızıp git-flow kullanımını bırakmaya gerek yok.&lt;/p&gt;
+
+&lt;p&gt;Peki ne yapacağız? Çok basit.&lt;/p&gt;
+
+&lt;p&gt;Master branch checkout edelim:&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;#git checkout master
+Branch master set up to track remote branch master from origin.
+Switched to a new branch 'master'
+&lt;/pre&gt;
+
+&lt;p&gt;Sonrasında git-flow initialize edelim. (Varsayılan değerleri kabul edebilirsiniz)&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;#git flow init
+
+Which branch should be used for bringing forth production releases?
+   - develop
+   - master
+Branch name for production releases: [master]
+
+Which branch should be used for integration of the "next release"?
+   - develop
+Branch name for "next release" development: [develop]
+
+How to name your supporting branch prefixes?
+Feature branches? [feature/]
+Release branches? [release/]
+Hotfix branches? [hotfix/]
+Support branches? [support/]
+Version tag prefix? []
+&lt;/pre&gt;
+
+&lt;p&gt;En son olarak develop branch&amp;#39;ını, tekrardan checkout edelim.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;#git checkout develop
+Switched to branch 'develop'
+&lt;/pre&gt;
+
+&lt;p&gt;Hepsi bu kadar. Artık git-flow ve nimetlerinden faydalanabilirsiniz.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Ruby on Rails'te Breadcrumb kullanımı</title>
+    <link rel="alternate" href="http://lab2023.com/ruby-on-rails-te-breadcrumb-kullanimi.html"/>
+    <id>http://lab2023.com/ruby-on-rails-te-breadcrumb-kullanimi.html</id>
+    <published>2013-07-31T00:00:00Z</published>
+    <updated>2014-04-26T16:50:19+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;p&gt;Ekmek kırıntısı anlamına gelen breadcrumbs web sayfalarında kullanıcının bulunduğu yeri rahat takip edebilsin ve gezinebilsin diye koyulan navigasyon sistemidir.&lt;/p&gt;
+
+&lt;p&gt;Ruby on Rails&amp;#39;de bunun için geliştirilen &lt;a href="https://github.com/weppos/breadcrumbs_on_rails"&gt;breadcrumbs_on_rails&lt;/a&gt; geminin kullanımını anlatacağım.&lt;/p&gt;
+
+&lt;p&gt;Öncelikle&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;gem install breadcrumbs_on_rails
+&lt;/pre&gt;
+
+&lt;p&gt;diyerek gemi kuruyoruz ve projemizin Gemfile&amp;#39;ına&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;gem 'breadcrumbs_on_rails'
+&lt;/pre&gt;
+
+&lt;p&gt;satırıyla ekliyoruz.&lt;/p&gt;
+
+&lt;p&gt;Artık yapmamız gereken her controller methodu içerisinde kullanıcı oradayken ne görmesi gerekiyorsa&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;def show
+    @product = Product.find(params[:id])
+    add_breadcrumb @product.name, product_path(@product)
+end
+&lt;/pre&gt;
+
+&lt;p&gt;şeklinde yazmak. Bir method içerisinde birden fazla breadcrumb ekleyebilirsiniz. Hepsi sırasıyla görüntülenir.&lt;/p&gt;
+
+&lt;p&gt;Son olarak breadcrumb&amp;#39;ın görünmesini istediğiniz layout&amp;#39;ta&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;= render_breadcrumbs :separator =&amp;gt; ' / '
+&lt;/pre&gt;
+
+&lt;p&gt;koduyla breadcrumbları listeleyebilirsiniz.&lt;/p&gt;
+
+&lt;p&gt;Ayrıca farklı stillerde görüntülemek için kendiniz manuel builderlar yazabilirsiniz. Örneğin twitter bootstrap tarzı breadcrumb için örnek builder&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;class BootstrapBreadcrumbsBuilder &amp;lt; BreadcrumbsOnRails::Breadcrumbs::Builder
+    def render
+        @context.content_tag(:ul, :class =&amp;gt; 'breadcrumb') do
+        elements_count = @elements.size
+        i = 0
+        @elements.collect do |element|
+            i += 1
+            render_element(element, last = (i == elements_count))
+            end.join.html_safe
+        end
+    end
+    def render_element(element, last = false)
+        current = @context.current_page?(compute_path(element))
+        @context.content_tag(:li, :class =&amp;gt; ('active' if last)) do
+            if last
+                link_or_text = compute_name(element)
+            else
+                link_or_text = @context.link_to(compute_name(element), compute_path(element), element.options)
+            end
+            divider = @context.content_tag(:span, (@options[:separator] || ' &amp;amp;gt; ').html_safe, :class =&amp;gt; 'divider') unless current
+            link_or_text + (last ? '' : (divider || ''))
+        end
+    end
+end
+&lt;/pre&gt;
+
+&lt;p&gt;şeklindedir. Bunu &amp;ldquo;lib/bootstrap&lt;em&gt;breadcrumbs&lt;/em&gt;builder.rb&amp;rdquo; içine yazarak.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;= render_breadcrumbs :builder =&amp;gt; ::BootstrapBreadcrumbsBuilder, :separator =&amp;gt; "&amp;amp;raquo;"
+&lt;/pre&gt;
+
+&lt;p&gt;şeklinde kullanabilirsiniz.&lt;/p&gt;
+</content>
+  </entry>
+</feed>
