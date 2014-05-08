@@ -11,7 +11,7 @@
     <link rel="alternate" href="http://lab2023.com/vagranta-giris.html"/>
     <id>http://lab2023.com/vagranta-giris.html</id>
     <published>2014-05-02T00:00:00Z</published>
-    <updated>2014-05-08T09:26:22+03:00</updated>
+    <updated>2014-05-08T16:37:19+03:00</updated>
     <author>
       <name>lab2023</name>
     </author>
@@ -34,7 +34,7 @@
 
 &lt;p&gt;&lt;a href="http://www.vagrantup.com/downloads.html"&gt;http://www.vagrantup.com/downloads.html&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Vagrant, Ruby dilinde geliştirilmiştir. Sisteminizde &lt;a href="http://en.wikipedia.org/wiki/RubyGems"&gt;RubyGems&lt;/a&gt; ve Vagrant gemi yüklü olmalıdır. Ruby dilini ve RubyGem&amp;#39;in sisteme yüklenmesini anlatmak bu makalenin konusu değildir. &lt;a href="https://github.com/sstephenson/rbenv"&gt;Rbenv&lt;/a&gt; bu konuda işinizi görecektir. Vagrant gemini yüklemek için &lt;code&gt;gem install&lt;/code&gt; komutunu kullanmanız gerekmektedir.&lt;/p&gt;
+&lt;p&gt;Mac OSX işletim sistemine has bir durum olarak: Sisteminizde &lt;a href="http://en.wikipedia.org/wiki/RubyGems"&gt;RubyGems&lt;/a&gt; ve Vagrant gemi yüklü olmalıdır. Ruby dilini ve RubyGem&amp;#39;in sisteme yüklenmesini anlatmak bu makalenin konusu değildir. &lt;a href="https://github.com/sstephenson/rbenv"&gt;Rbenv&lt;/a&gt; bu konuda işinizi görecektir. Vagrant gemini yüklemek için &lt;code&gt;gem install&lt;/code&gt; komutunu kullanmanız gerekmektedir.&lt;/p&gt;
 &lt;pre class="highlight shell"&gt;gem install vagrant
 &lt;/pre&gt;
 
@@ -92,7 +92,7 @@
     <link rel="alternate" href="http://lab2023.com/rails-view-helpers.html"/>
     <id>http://lab2023.com/rails-view-helpers.html</id>
     <published>2014-04-22T00:00:00Z</published>
-    <updated>2014-05-08T09:00:52+03:00</updated>
+    <updated>2014-05-08T15:38:34+03:00</updated>
     <author>
       <name>lab2023</name>
     </author>
@@ -157,7 +157,7 @@
     <link rel="alternate" href="http://lab2023.com/rabbitmq-hello-world-ornegi.html"/>
     <id>http://lab2023.com/rabbitmq-hello-world-ornegi.html</id>
     <published>2014-04-21T00:00:00Z</published>
-    <updated>2014-05-08T09:00:52+03:00</updated>
+    <updated>2014-05-08T15:38:34+03:00</updated>
     <author>
       <name>lab2023</name>
     </author>
@@ -309,7 +309,7 @@
     <link rel="alternate" href="http://lab2023.com/rabbitmq.html"/>
     <id>http://lab2023.com/rabbitmq.html</id>
     <published>2014-04-20T00:00:00Z</published>
-    <updated>2014-05-08T09:00:52+03:00</updated>
+    <updated>2014-05-08T15:38:34+03:00</updated>
     <author>
       <name>lab2023</name>
     </author>
