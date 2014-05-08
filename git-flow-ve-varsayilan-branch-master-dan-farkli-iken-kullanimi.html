@@ -85,48 +85,48 @@ lab2023.com
 <p>Nasıl mı? İşte cevabı:</p>
 
 <p>Örneğin varsayılan branch develop olduğunda projeyi checkout edelim. Hemen ardından, git-flow initialize etmek istersek aşağıdaki hatayı alıyoruz.</p>
-<pre class="highlight plaintext">#git flow init
 
-Which branch should be used for bringing forth production releases?
-   - develop
-Branch name for production releases: []
-Local branch '' does not exist.
-</pre>
+<p>#git flow init</p>
+
+<p>Which branch should be used for bringing forth production releases?
+       - develop
+    Branch name for production releases: []
+    Local branch &ldquo; does not exist.</p>
 
 <p>Panik yapıp işleri karıştırmaya, hataya kızıp git-flow kullanımını bırakmaya gerek yok.</p>
 
 <p>Peki ne yapacağız? Çok basit.</p>
 
 <p>Master branch checkout edelim:</p>
-<pre class="highlight plaintext">#git checkout master
-Branch master set up to track remote branch master from origin.
-Switched to a new branch 'master'
-</pre>
+
+<p>#git checkout master
+    Branch master set up to track remote branch master from origin.
+    Switched to a new branch &lsquo;master&rsquo;</p>
 
 <p>Sonrasında git-flow initialize edelim. (Varsayılan değerleri kabul edebilirsiniz)</p>
-<pre class="highlight plaintext">#git flow init
 
-Which branch should be used for bringing forth production releases?
-   - develop
-   - master
-Branch name for production releases: [master]
+<p>#git flow init</p>
 
-Which branch should be used for integration of the "next release"?
-   - develop
-Branch name for "next release" development: [develop]
+<p>Which branch should be used for bringing forth production releases?
+       - develop
+       - master
+    Branch name for production releases: [master]</p>
 
-How to name your supporting branch prefixes?
-Feature branches? [feature/]
-Release branches? [release/]
-Hotfix branches? [hotfix/]
-Support branches? [support/]
-Version tag prefix? []
-</pre>
+<p>Which branch should be used for integration of the <q>next release</q>?
+       - develop
+    Branch name for <q>next release</q> development: [develop]</p>
+
+<p>How to name your supporting branch prefixes?
+    Feature branches? [feature/]
+    Release branches? [release/]
+    Hotfix branches? [hotfix/]
+    Support branches? [support/]
+    Version tag prefix? []</p>
 
 <p>En son olarak develop branch&#39;ını, tekrardan checkout edelim.</p>
-<pre class="highlight plaintext">#git checkout develop
-Switched to branch 'develop'
-</pre>
+
+<p>#git checkout develop
+    Switched to branch &lsquo;develop&rsquo;</p>
 
 <p>Hepsi bu kadar. Artık git-flow ve nimetlerinden faydalanabilirsiniz.</p>
 

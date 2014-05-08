@@ -84,11 +84,11 @@ lab2023.com
 <div class='col-lg-8'>
 <article class='post'>
 <h1>RabbitMQ ile AMQP standartında mesajlaşma sistemine hızlı bir giriş</h1>
-<h3>RabbitMQ nedir?</h3>
+<h3 id="rabbitmq-nedir?">RabbitMQ nedir?</h3>
 
 <p>RabbitMQ, <a href="http://www.gopivotal.com/">Pivotal</a> firması tarafından Erlang programlama dili ile geliştirilen <a href="http://www.amqp.org/">AMQP</a> standartlarına göre geliştirilmiş robust mesajlaşma sistemidir.</p>
 
-<h3>Kimler kullanmalı?</h3>
+<h3 id="kimler-kullanmalı?">Kimler kullanmalı?</h3>
 
 <ul>
 <li>Ölçeklenebilir uygulamalar yapmak istiyenler.</li>
@@ -96,7 +96,7 @@ lab2023.com
 <li>Uygulamanızdaki resim işleme, rapor oluşturma gibi uzun süren işleri arka planda yapmak isteyenler.</li>
 </ul>
 
-<h3>Öne çıkan özellikleri</h3>
+<h3 id="Öne-çıkan-özellikleri">Öne çıkan özellikleri</h3>
 
 <ul>
 <li>Robust mesajlaşma</li>
@@ -106,7 +106,7 @@ lab2023.com
 <li>Açık kaynaklı ve ticari desteğinin bulunması</li>
 </ul>
 
-<h3>Terminoloji</h3>
+<h3 id="terminoloji">Terminoloji</h3>
 
 <p>Kurulum ve örneklere geçmeden önce RabbitMQ ve mesajlaşma ile ilgili bir kaç tanımı belirtmekte fayda vardır.</p>
 
@@ -123,13 +123,13 @@ lab2023.com
 <li>Producer ve Consumerlar aynı programlama dili ile yazılmak zorunda değildir.</li>
 </ul>
 
-<h3>Kurulum</h3>
+<h3 id="kurulum">Kurulum</h3>
 
 <p>Bu makalede sadece OSX için Homebrew ile kurulumu anlatılacaktır. İleri tarihte belki Ubuntu sunucular da eklenebilir.</p>
 
 <p>Bu örneği Ruby dilinde yapacağız. RabbitMQ&#39;nun Ruby Client&#39;ı olarak <a href="http://rubybunny.info/">Bunny</a>&lsquo;i gemini kullanabiliriz. Bunny&#39;i kurmak için <code>gem install bunny</code> demeniz yeterlidir.</p>
 
-<h3>OSX&#39;e Homebrew ile kurulumu</h3>
+<h3 id="osx&#39;e-homebrew-ile-kurulumu">OSX&#39;e Homebrew ile kurulumu</h3>
 <pre class="highlight shell">brew update
 brew install rabbitmq
 </pre>
@@ -174,7 +174,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
 <p><code>rabbitmq-server</code> komutunu çalıştırdıktan sonra <code>http://localhost:15672/</code> adresinden yönetim paneline girebilirsiniz. Varsayılan ayarlarda aynı makineden bağlanabilmesi kaydı ile <code>guest</code> kullanıcı ismi ve <code>guest</code> şifresi ile bir kullanıcı tanımlanmıştır.</p>
 
 <ul>
-<li>URL : http://localhost:15672/</li>
+<li>URL : <a href="http://localhost:15672/">http://localhost:15672/</a></li>
 <li>Kullanıcı adı : guest</li>
 <li>Kullanıcı şifresi : guest</li>
 </ul>
@@ -183,7 +183,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
 
 <p>Saygılar.</p>
 
-<h3>Kaynaklar</h3>
+<h3 id="kaynaklar">Kaynaklar</h3>
 
 <ul>
 <li><a href="http://en.wikipedia.org/wiki/RabbitMQ">http://en.wikipedia.org/wiki/RabbitMQ</a></li>

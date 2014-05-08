@@ -131,64 +131,64 @@ lab2023.com
 </pre>
 
 <p><strong>Partials ve @import:</strong> Kodlarımızı bölümleyip istediğimiz yerde import edebiliyoruz.</p>
-<pre class="highlight plaintext">/* _reset.sass */
-body
- margin: 0
- padding: 0
-</pre>
+
+<p>/* _reset.sass */
+    body
+     margin: 0
+     padding: 0</p>
 
 <p>Bu dosyayı asıl stil dosyamıza dahil edelim.</p>
-<pre class="highlight plaintext">/* base.sass */
-@import 'reset'
-</pre>
+
+<p>/* base.sass */
+    @import &lsquo;reset&rsquo;</p>
 
 <p><strong>Mixins:</strong> bu özellik sayesinde css3 ün hayatımızı zor bir yoldan kolaylaştıran özelliklerini sıkılmadan uygulayabileceğiz.</p>
-<pre class="highlight plaintext">@mixin border-radius($radius)
-  -webkit-border-radius: $radius
-  -moz-border-radius: $radius
-  -ms-border-radius: $radius
-  -o-border-radius: $radius
-  border-radius: $radius
-</pre>
+
+<p>@mixin border-radius($radius)
+      -webkit-border-radius: $radius
+      -moz-border-radius: $radius
+      -ms-border-radius: $radius
+      -o-border-radius: $radius
+      border-radius: $radius</p>
 
 <p>Mixin&#39;i sass&#39;da çağırıyoruz.</p>
-<pre class="highlight plaintext"> .box
-   @include border-radius(10px)
-</pre>
+
+<p>.box
+       @include border-radius(10px)</p>
 
 <p>Bu mixin&#39;inden sonra border-radius kullandığımızda ekstra kodları yazmamıza gerek yok.</p>
 
 <p><strong>Extend/Inheritance:</strong> class yada id&#39;lerde kullandığımız özellikleri @extend özelliği ile bir sonraki class yada id mizin içinde kullanabiliyoruz.</p>
 
 <p>message class&#39;ı için kodlarımız bunlar.</p>
-<pre class="highlight plaintext">.message
-  border: 1px solid #ccc
-  padding: 10px
-  color: #333
-</pre>
+
+<p>.message
+      border: 1px solid #ccc
+      padding: 10px
+      color: #333</p>
 
 <p>Şimdide diğer class yada id&#39;mizde bu kodları extend edelim.</p>
-<pre class="highlight plaintext">.success
-  @extend .message
-  border-color: green
 
-.error
-  @extend .message
-  border-color: red
-</pre>
+<p>.success
+      @extend .message
+      border-color: green</p>
+
+<p>.error
+      @extend .message
+      border-color: red</p>
 
 <p><strong>Operators:</strong> css özelliklerini yazarken operatorleri kullanabileceğimizi biliyor muydunuz? :)</p>
-<pre class="highlight plaintext">aside
- float: right
- width: 300px / 960px * 100%
-</pre>
+
+<p>aside
+     float: right
+     width: 300px / 960px * 100%</p>
 
 <p>Css çıktısı:</p>
-<pre class="highlight plaintext">aside {
- float: right;
- width: 31.25%;
-  }
-</pre>
+
+<p>aside {
+     float: right;
+     width: 31.25%;
+      }</p>
 
 <div id='disqus_thread'></div>
 <script>

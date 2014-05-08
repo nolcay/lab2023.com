@@ -91,7 +91,7 @@ lab2023.com
 <p>Öncelikle CORS konusu hakkında araştırma yapmak isterseniz size aşağıdaki kaynakları önerebilirim;</p>
 
 <ul>
-<li>  <a href="http://en.wikipedia.org/wiki/Cross-origin%5C_resource%5C_sharing">http://en.wikipedia.org/wiki/Cross-origin<em>resource</em>sharing</a></li>
+<li>  <a href="http://en.wikipedia.org/wiki/Cross-origin%5C_resource%5C_sharing">http://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a></li>
 <li>  <a href="http://www.w3.org/TR/cors/">http://www.w3.org/TR/cors/</a></li>
 </ul>
 
@@ -102,32 +102,32 @@ lab2023.com
 <p><code>gem &quot;rack-cors&quot;, &quot;~&gt; 0.2.7&quot;</code></p>
 
 <p>Bundle install işleminden sonra, config\application.rb dosyamıza gidip en alt satırlarda uygun bir yere aşağıdaki satırları ekliyoruz:</p>
-<pre class="highlight plaintext">config.middleware.use Rack::Cors do |requests|
-  requests.allow do |allow|
-    allow.origins '*'
-    allow.resource '*', :headers =&gt; :any, :methods =&gt; [:get, :post, :put, :delete, :options]
-  end
-end
-</pre>
 
-<p>Yukarıdaki middleware katmanını ayrı bir initializer dosyası hazırlayarak da kullanabilirsiniz. Bu konu için http://guides.rubyonrails.org/rails<em>on</em>rack.html#inspecting-middleware-stack adresine bir göz atabilirsiniz.</p>
+<p>config.middleware.use Rack::Cors do |requests|
+      requests.allow do |allow|
+        allow.origins &lsquo;*&rsquo;
+        allow.resource &lsquo;*&rsquo;, :headers =&gt; :any, :methods =&gt; [:get, :post, :put, :delete, :options]
+      end
+    end</p>
+
+<p>Yukarıdaki middleware katmanını ayrı bir initializer dosyası hazırlayarak da kullanabilirsiniz. Bu konu için <a href="http://guides.rubyonrails.org/rails_on_rack.html#inspecting-middleware-stack">http://guides.rubyonrails.org/rails_on_rack.html#inspecting-middleware-stack</a> adresine bir göz atabilirsiniz.</p>
 
 <p>Bu ayarları yaptıktan ve uygulamanızı yeniden başlattıktan sonra artık response header&#39;larında aşağıdaki gibi bir çıktı görüp farklı kaynaklardan uygulamanıza istekler yapılması sağlanmış olacaktır.</p>
-<pre class="highlight plaintext">Request URL: http://vidipanda-api.dev/videos
-Request Method: POST
-Status Code: 200 OK
-...
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-Access-Control-Allow-Origin: http://vidipanda-mobile.dev
-Access-Control-Expose-Headers:
-Access-Control-Max-Age:1728000
-....
-</pre>
+
+<p>Request URL: <a href="http://vidipanda-api.dev/videos">http://vidipanda-api.dev/videos</a>
+    Request Method: POST
+    Status Code: 200 OK
+    &hellip;
+    Access-Control-Allow-Credentials: true
+    Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+    Access-Control-Allow-Origin: <a href="http://vidipanda-mobile.dev">http://vidipanda-mobile.dev</a>
+    Access-Control-Expose-Headers:
+    Access-Control-Max-Age:1728000
+    &hellip;.</p>
 
 <p>Bu konunun daha detaylı ele alınması gereken bir konu oldugunu düşünüyorum, bu yüzden ilerleyen zamanlarda imkan olursa bir makale daha çıkarmayı planlıyorum, ama siz beni beklemeyin iyisi mi aşağıdaki kaynakçaya bir göz atın&hellip;</p>
 
-<h3>Kaynakça</h3>
+<h3 id="kaynakça">Kaynakça</h3>
 
 <ul>
 <li>  <a href="http://www.html5rocks.com/en/tutorials/cors/">http://www.html5rocks.com/en/tutorials/cors/</a></li>

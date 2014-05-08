@@ -85,76 +85,76 @@ lab2023.com
 <!--more-->
 
 <p>Öncelikle paperclip geminin processorları aradığı</p>
-<pre class="highlight plaintext">lib/paperclip_processors
-</pre>
+
+<p>lib/paperclip_processors</p>
 
 <p>klasörünün içine watermark.rb dosyamızı oluşturup</p>
-<pre class="highlight plaintext">module Paperclip
-  class Watermark &lt; Thumbnail
-    # Handles watermarking of images that are uploaded.
-    attr_accessor :format, :whiny, :watermark_path, :position
 
-    def initialize file, options = {}, attachment = nil
-      super
-      @file             = file
-      @whiny            = options[:whiny].nil? ? true : options[:whiny]
-      @format           = options[:format]
-      @watermark_path   = options[:watermark_path]
-      @position         = options[:watermark_position].nil? ? "SouthEast" : options[:watermark_position]
+<p>module Paperclip
+      class Watermark &lt; Thumbnail
+        # Handles watermarking of images that are uploaded.
+        attr_accessor :format, :whiny, :watermark_path, :position</p>
 
-      @current_format   = File.extname(@file.path)
-      @basename         = File.basename(@file.path, @current_format)
-    end
+<p>def initialize file, options = {}, attachment = nil
+          super
+          @file             = file
+          @whiny            = options[:whiny].nil? ? true : options[:whiny]
+          @format           = options[:format]
+          @watermark_path   = options[:watermark_path]
+          @position         = options[:watermark_position].nil? ? <q>SouthEast</q> : options[:watermark_position]</p>
 
-    # Performs the conversion of the +file+ into a watermark. Returns the Tempfile
-    # that contains the new image.
-    def make
-      return @file unless watermark_path
+<p>@current_format   = File.extname(@file.path)
+          @basename         = File.basename(@file.path, @current_format)
+        end</p>
 
-      dst = Tempfile.new([@basename, @format].compact.join("."))
-      dst.binmode
+<p># Performs the conversion of the +file+ into a watermark. Returns the Tempfile
+        # that contains the new image.
+        def make
+          return @file unless watermark_path</p>
 
-      command = "composite"
-      params = "-gravity #{@position} #{watermark_path} #{fromfile} #{tofile(dst)}"
+<p>dst = Tempfile.new([@basename, @format].compact.join(<q>.</q>))
+          dst.binmode</p>
 
-      begin
-        success = Paperclip.run(command, params)
-      rescue PaperclipCommandLineError
-        raise PaperclipError, "There was an error processing the watermark for #{@basename}" if @whiny
+<p>command = <q>composite</q>
+          params = <q>-gravity #{@position} #{watermark_path} #{fromfile} #{tofile(dst)}</q></p>
+
+<p>begin
+            success = Paperclip.run(command, params)
+          rescue PaperclipCommandLineError
+            raise PaperclipError, <q>There was an error processing the watermark for #{@basename}</q> if @whiny
+          end</p>
+
+<p>dst
+        end</p>
+
+<p>def fromfile
+          <q>\</q>#{ File.expand_path(@file.path) }[0]\&ldquo;&rdquo;
+        end</p>
+
+<p>def tofile(destination)
+          <q>\</q>#{ File.expand_path(destination.path) }[0]\&ldquo;&rdquo;
+        end
       end
-
-      dst
-    end
-
-    def fromfile
-      "\"#{ File.expand_path(@file.path) }[0]\""
-    end
-
-    def tofile(destination)
-      "\"#{ File.expand_path(destination.path) }[0]\""
-    end
-  end
-end
-</pre>
+    end</p>
 
 <p>şeklinde watermark classımızı ekliyoruz.</p>
 
 <p>Ardından ilgili model dosyamızda</p>
-<pre class="highlight plaintext">has_attached_file :photo,
-processors: [:thumbnail, :watermark],
-styles: {
-  zoom: { geometry: '1024x576#', watermark_path: "#{Rails.root}/app/assets/images/watermarks/watermark_zoom.png"},
-  main: { geometry: '770x520#', watermark_path: "#{Rails.root}/app/assets/images/watermarks/watermark_main.png"}
-}
-</pre>
+
+<p>has_attached_file :photo,
+    processors: [:thumbnail, :watermark],
+    styles: {
+      zoom: { geometry: &lsquo;1024x576#&rsquo;, watermark_path: <q>#{Rails.root}/app/assets/images/watermarks/watermark_zoom.png</q>},
+      main: { geometry: &lsquo;770x520#&rsquo;, watermark_path: <q>#{Rails.root}/app/assets/images/watermarks/watermark_main.png</q>}
+    }</p>
 
 <p>şeklinde eklediğimiz resimler için kullanılacak processorlerı tanımlıyoruz, thumbnail resimlerin boyutunu düzenlemek için paperclipte tanımlanmış processor classıdır eklenmediği sürece resim boyutlandırması yapılmaz. Ardından farklı boyutlar için yeniden boyutlandırma için geometry ve watermark olarak eklenecek resmimizin path&#39;ini veriyoruz.</p>
 
 <p>Bu işlemlerden sonra eklenecek her resime watermark&#39;ınız eklenecektir.</p>
 
 <p>Eğer daha önce upload ettiğiniz resimlere de watermark&#39;ınızın eklenmesini istiyorsanız.</p>
-<pre class="highlight plaintext">rake paperclip:refresh class=Product
-</pre>
+
+<p>rake paperclip:refresh class=Product</p>
 
 <p>rake&#39;ini çalıştırmanız yeterlidir.</p>
 

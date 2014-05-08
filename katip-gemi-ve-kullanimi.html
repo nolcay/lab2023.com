@@ -80,60 +80,60 @@ lab2023.com
 <div class='col-lg-8'>
 <article class='post'>
 <h1>Katip gemi ve kullanımı</h1>
-<h2>Katip nedir?</h2>
+<h2 id="katip-nedir?">Katip nedir?</h2>
 
 <p>Katip, git üzerinden takip edilen bir projede değişiklik günlüğü oluşturmanızı sağlar.</p>
 
 <p>Katip, git üzerinden versiyon etiketlerine göre gruplanmış bir şekilde değişiklik günlüğünü döker. Gem size herhangi bir git projesinde kullanabileceğiniz <strong>katip</strong> isminde bir çalıştırılabilir dosya da sağlar. Günlük satırları, commitlere olan bağlantıları; commit notunu ve kulanıcı adını içerir.</p>
 
-<h2>Kurulum</h2>
+<h2 id="kurulum">Kurulum</h2>
 
 <p>Katip&#39;i kurmak için</p>
-<pre class="highlight plaintext">gem install katip
-</pre>
+
+<p>gem install katip</p>
 
 <p>bundler kullanıyorsanız Gemfile&#39;a aşağıdaki satırları ekleyin:</p>
-<pre class="highlight plaintext">source 'https://rubygems.org'
-gem 'katip'
-</pre>
 
-<h2>Kullanımı</h2>
+<p>source &lsquo;<a href="https://rubygems.org">https://rubygems.org</a>&rsquo;
+    gem &lsquo;katip&rsquo;</p>
 
-<h3>Çalıştırılabilir dosya ile kullanımı</h3>
+<h2 id="kullanımı">Kullanımı</h2>
+
+<h3 id="Çalıştırılabilir-dosya-ile-kullanımı">Çalıştırılabilir dosya ile kullanımı</h3>
 
 <p>git ile takip ettiğiniz proje dizininde <strong>katip</strong> yazıp çalıştırın:</p>
-<pre class="highlight plaintext">% katip
-Create CHANGELOG.md
-</pre>
+
+<p>% katip
+    Create CHANGELOG.md</p>
 
 <p>Dosya isminizin CHANGELOG.md yerine farklı bir isimde olmasını istiyorsanız</p>
-<pre class="highlight plaintext">% katip BenimDosyam.md
-Create BenimDosyam.md
-</pre>
 
-<h3>rake olarak kullanımı</h3>
+<p>% katip BenimDosyam.md
+    Create BenimDosyam.md</p>
+
+<h3 id="rake-olarak-kullanımı">rake olarak kullanımı</h3>
 
 <p>Gemfile&#39; a gem&#39; i ekleyin:</p>
-<pre class="highlight plaintext">source 'https://rubygems.org'
 
-gem 'katip'
-</pre>
+<p>source &lsquo;<a href="https://rubygems.org">https://rubygems.org</a>&rsquo;</p>
+
+<p>gem &lsquo;katip&rsquo;</p>
 
 <p>ve sonrasında rake olarak çalıştırabilirsiniz</p>
-<pre class="highlight plaintext">% rake katip:create
-Create CHANGELOG.md
-</pre>
+
+<p>% rake katip:create
+    Create CHANGELOG.md</p>
 
 <p>Dosya isminizin CHANGELOG.md yerine farklı bir isimde olmasını istiyorsanız</p>
-<pre class="highlight plaintext">% rake katip:create file=BenimDosyam.md
-Create BenimDosyam.md
-</pre>
+
+<p>% rake katip:create file=BenimDosyam.md
+    Create BenimDosyam.md</p>
 
 <p>ve işte bu kadar. Proje dizininizde, commit&#39; lere dayanarak etiketlere göre gruplanmış şekilde günlük dosyanız hazır.</p>
 
 <p><a href="https://github.com/kebab-project/katip/blob/develop/CHANGELOG.md" target="_blank">Örnek çıktı - CHANGELOG.md</a></p>
 
-<h4>Bağlantılar</h4>
+<h4 id="bağlantılar">Bağlantılar</h4>
 
 <p><a href="https://github.com/kebab-project/katip" target="_blank">Kaynak kodu</a> <a href="http://github.com/kebab-project/katip/issues" target="_blank">Hata ve geri bildirimler</a></p>
 

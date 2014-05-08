@@ -95,8 +95,8 @@ lab2023.com
 <p>A geliştiricisinin eklediği yeni bir içerigin B geliştiricisinde bulunan fork repoya alınması. Bunun çözümünü şu makalede bulabilirsiniz: <a href="http://bradlyfeeley.com/2008/09/03/update-a-github-fork-from-the-original-repo/">http://bradlyfeeley.com/2008/09/03/update-a-github-fork-from-the-original-repo/</a> Ben yine de aşağıda kısa bir özet geçmek istiyorum;</p>
 
 <p>Playbook&#39; u ele alırsak. Ben kendi bilgisayarıma <strong>lab2023/playbook</strong>&lsquo;u clonladım. Ardından kendi hesabıma bu repoyu forkladım ve lokalime <strong>lab2023/playbook</strong> dan çatallanan <strong>tayfunoziserikan/playbook</strong> reposunu playbook-fork adı altında tekrar klonladım. Bu repoya da yukarıdaki makalede anlatıldıgı şekilde;</p>
-<pre class="highlight plaintext">git remote add --track master playbook git@github.com:lab2023/playbook.git
-</pre>
+
+<p>git remote add &ndash;track master playbook <a href="mailto:git@github.com">git@github.com</a>:lab2023/playbook.git</p>
 
 <p>remote branch&#39;ını ekledim. Artık orjinal playbook&rsquo; da yapılan diğer değişiklikleri bu branch&#39;a fetch yapıp kendi master branch&#39;ına merge ederek playbook-fork repomun güncel kalmasını sağlayabiliyorum.</p>
 

@@ -85,41 +85,41 @@ lab2023.com
 <p>4 adetde mixin var row, column, pull, push</p>
 
 <p>En basit olarak şöyle bir <strong>sass</strong> kodundan</p>
-<pre class="highlight plaintext">$column-width: 60px
-$gutter-width: 20px
-$columns: 12
-$total-width: 100%
 
-header
-  +column(12)
-nav
-  +column(12)
-section
-  +column(9)
-aside
-  +column(3)
-article
-  +column(12)
-footer
-  +column(12)
-</pre>
+<p>$column-width: 60px
+    $gutter-width: 20px
+    $columns: 12
+    $total-width: 100%</p>
+
+<p>header
+      +column(12)
+    nav
+      +column(12)
+    section
+      +column(9)
+    aside
+      +column(3)
+    article
+      +column(12)
+    footer
+      +column(12)</p>
 
 <p>Şöyle Bir <strong>haml</strong> kodundan</p>
-<pre class="highlight plaintext">%header
-  %h2 Header
-%nav
-  %h2 Menu
-%section
-  %h2 Main
-%aside
-  %article
-    %h2 aside
-  %article
-    %h2 aisde
-%footer
-  %h2
-    Copyright © 2013
-</pre>
+
+<p>%header
+      %h2 Header
+    %nav
+      %h2 Menu
+    %section
+      %h2 Main
+    %aside
+      %article
+        %h2 aside
+      %article
+        %h2 aisde
+    %footer
+      %h2
+        Copyright © 2013</p>
 
 <p>Hem <strong>fixed</strong> hem <strong>fluid</strong> olarak bu düzene ulaşabilirsiniz.</p>
 

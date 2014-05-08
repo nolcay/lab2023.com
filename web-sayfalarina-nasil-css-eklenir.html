@@ -87,8 +87,8 @@ lab2023.com
 <p>Bu yöntemle html elementinin içine style özelliği kullanılarak eklenilebilir.</p>
 
 <p>Örnek:</p>
-<pre class="highlight plaintext">&lt;div style=”color:blue; width:150px;” &gt; Deneme Yazısı &lt;/div&gt;
-</pre>
+
+<p><div style=”color:blue; width:150px;” > Deneme Yazısı </div></p>
 
 <p>Her tag’e özellik atamak kullanışlı değildir, özel durumlarda kullanılması uygundur.</p>
 
@@ -97,62 +97,62 @@ lab2023.com
 <p><code>&lt;head&gt;...&lt;/head&gt;</code> tag’leri arasına <code>&lt;style&gt;...&lt;/style&gt;</code> elementinin içinde kullanılır.</p>
 
 <p>Örnek:</p>
-<pre class="highlight plaintext">&lt;head&gt;
-    &lt;title&gt;Site Başlığı&lt;/title&gt;
-    &lt;style type=”text/css”&gt;
-        .content{
-            color: pink;
-            width: 200px;
-            height: 500px;
-            }
-        a.title{
-            width: 100px;
-            height: 50px;
-            }
 
-&lt;/style&gt;
-&lt;/head&gt;
-</pre>
+<p><head>
+        <title>Site Başlığı</title>
+        <style type=”text/css”>
+            .content{
+                color: pink;
+                width: 200px;
+                height: 500px;
+                }
+            a.title{
+                width: 100px;
+                height: 50px;
+                }</p>
+
+<p></style>
+    </head></p>
 
 <p><strong><em>3-Harici stil dosyası ekleme:</em></strong></p>
 
 <p>Bu yöntemde stil özelliklerimizi .css uzantılı ayrı bir sayfaya yazarız. <code>&lt;head&gt;...&lt;/head&gt;</code> tag’leri arasındada css dosyamızın yolunu belirterek etkinleştirmiş oluruz.</p>
 
 <p>Örnek: style.css adlı stil dosyası</p>
-<pre class="highlight plaintext">p{
-  color: black;
-  font-family: Tahoma, arial;
- }
 
-#content{
-  width: 500px;
-  height: auto;
- }
-</pre>
+<p>p{
+      color: black;
+      font-family: Tahoma, arial;
+     }</p>
+
+<p>#content{
+      width: 500px;
+      height: auto;
+     }</p>
 
 <p>Bu sayfanın web sayfasına eklenmesi aşağıda gösterilmiştir.</p>
 
 <p>Örnek:</p>
-<pre class="highlight plaintext">&lt;head&gt;
-    &lt;title&gt;Sayfamızın Başlığı&lt;/title&gt;
-    &lt;link rel=”stylesheet”  href=”style.css”   type=”text/css” /&gt;
-&lt;/head&gt;
-</pre>
+
+<p><head>
+        <title>Sayfamızın Başlığı</title>
+        <link rel=”stylesheet”  href=”style.css”   type=”text/css” />
+    </head></p>
 
 <p><strong><em>4- @import yöntemi ile:</em></strong></p>
 
 <p>Bu yöntem kullanılış yönünden 2. yönteme, çalışma mantığı yönündende 3. yönteme benzer. İçerik bakımından yüklü sitelerde bölümlere ayrılmış stil yapısı için kullanımı uygundur.</p>
 
 <p>Örnek:</p>
-<pre class="highlight plaintext">&lt;head&gt;
-    &lt;title&gt;Site Başlığı&lt;/title&gt;
-    &lt;style type=”text/css”&gt;
-@import “style.css”;
-@import “sidebar.css”;
-@import “footer.css”;
-&lt;/style&gt;
-&lt;/head&gt;
-</pre>
+
+<p><head>
+        <title>Site Başlığı</title>
+        <style type=”text/css”>
+    @import “style.css”;
+    @import “sidebar.css”;
+    @import “footer.css”;
+    </style>
+    </head></p>
 
 <div id='disqus_thread'></div>
 <script>

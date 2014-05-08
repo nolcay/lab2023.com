@@ -83,48 +83,48 @@ lab2023.com
 <p>Rails&#39;da Çoklu para birimi dönüşümü (Multi Currency) için geliştirilmiş olan <a href="https://github.com/RubyMoney/money">money gem</a> ve <a href="https://github.com/RubyMoney/money-rails">money-rails gem</a>&lsquo;i ni kullanırken geçmişe yönelik dönüşüm yapma sıkıntısı ve oranları <strong>Türkiye Cumhuriyeti Merkez Bankası</strong>&#39;ndan kur almak amacıyla <a href="https://github.com/RubyMoney/google_currency">google-currency gem</a>&#39;ini uyarlanmıştır. Bu gem ile Merkez Bankası&#39;ndaki 20&#39;ye yakın para birimi ile dönüşümü <a href="https://github.com/RubyMoney/money">Money</a> gemi altyapısıyla kullanabilirsiniz.</p>
 
 <p>Öncelikle gemfile&#39;ımıza <strong>money-rails</strong> ve <strong>tcmb_currency</strong> gemlerini ekliyoruz</p>
-<pre class="highlight plaintext">gem 'money-rails'
-gem 'tcmb_currency', :git =&gt; 'git://github.com/lab2023/tcmb_currency.git
-</pre>
+
+<p>gem &#39;money-rails&rsquo;
+    gem &lsquo;tcmb_currency&rsquo;, :git =&gt; &lsquo;git://github.com/lab2023/tcmb_currency.git</p>
 
 <p>ve ardından <em>bundle install</em> komutunu çalıştırarak gemleri projeye dahil ediyoruz. Gemler yüklenip, projeye dahil edildikten sonra terminalden</p>
-<pre class="highlight plaintext">$ rails g tcmb_currency:initializer
-$ rails g tcmb_currency:migration
-$ rake db:migrate
-</pre>
+
+<p>$ rails g tcmb_currency:initializer
+    $ rails g tcmb_currency:migration
+    $ rake db:migrate</p>
 
 <p>komutlarını çalıştırıp initializer dosyasını ve database tablolarını oluşturuyoruz. &lt;!&ndash; more &ndash;&gt; Son olarak ise</p>
-<pre class="highlight plaintext">$ rake tcmb_currency:insert_from_tcmb
-</pre>
+
+<p>$ rake tcmb_currency:insert_from_tcmb</p>
 
 <p>rake task&#39;ını günlük olarak çalışacak bir cron job a atayarak (bu iş için <a href="https://github.com/javan/whenever">whenever gem</a> kullanılabilir), günlük olarak oranların database&#39;e eklenmesi sağlanır</p>
 
 <p>Ardından tek yapılması gereken money gemi işlemleri cent,kuruş vb. bazlı yaptığı için modelinize <em>monetize :price_cents</em> eklemek.</p>
-<pre class="highlight plaintext">class Product &lt; ActiveRecord::Base
-    attr_accessible :price, :product ,:price_cents, :price_currency
-    monetize :price_cents
-end
-</pre>
+
+<p>class Product &lt; ActiveRecord::Base
+        attr_accessible :price, :product ,:price_cents, :price_currency
+        monetize :price_cents
+    end</p>
 
 <p>Artık view katmanında</p>
-<pre class="highlight plaintext">&lt;% @products.each do |product| %&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;%= product.product %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;% price =Money.new(product.price_cents,product.price_currency) %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= humanized_money_with_symbol price %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= humanized_money_with_symbol price.exchange_to(:JPY) %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= humanized_money_with_symbol price.exchange_to(:EUR, "2013-03-06") %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= link_to 'Show', product %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= link_to 'Edit', edit_product_path(product) %&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;% end %&gt;
-</pre>
+
+<p>&lt;% @products.each do |product| %&gt;
+        <tr>
+            <td>&lt;%= product.product %&gt;</td>
+            <td>&lt;% price =Money.new(product.price_cents,product.price_currency) %&gt;</td>
+            <td>&lt;%= humanized_money_with_symbol price %&gt;</td>
+            <td>&lt;%= humanized_money_with_symbol price.exchange_to(:JPY) %&gt;</td>
+            <td>&lt;%= humanized_money_with_symbol price.exchange_to(:EUR, <q>2013-03-06</q>) %&gt;</td>
+            <td>&lt;%= link_to &#39;Show&rsquo;, product %&gt;</td>
+            <td>&lt;%= link_to &lsquo;Edit&rsquo;, edit_product_path(product) %&gt;</td>
+            <td>&lt;%= link_to &lsquo;Destroy&rsquo;, product, method: :delete, data: { confirm: &lsquo;Are you sure?&rsquo; } %&gt;</td>
+        </tr>
+    &lt;% end %&gt;</p>
 
 <p>şeklinde kullanabilirsiniz</p>
-<pre class="highlight plaintext">Money.new(1000,"USD").exchange_to(:EUR) # O güne ait oranlara göre dönüşüm yapar
-Money.new(1000,"USD").exchange_to(:EUR, "2013-03-02") # Verilen tarihe ait oranlara göre dönüşüm yapar
-</pre>
+
+<p>Money.new(1000,<q>USD</q>).exchange_to(:EUR) # O güne ait oranlara göre dönüşüm yapar
+    Money.new(1000,<q>USD</q>).exchange_to(:EUR, <q>2013-03-02</q>) # Verilen tarihe ait oranlara göre dönüşüm yapar</p>
 
 <div id='disqus_thread'></div>
 <script>

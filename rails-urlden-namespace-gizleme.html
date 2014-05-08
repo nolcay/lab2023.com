@@ -81,24 +81,24 @@ lab2023.com
 <article class='post'>
 <h1>Rails Urlden Namespace Gizleme</h1>
 <p>Urlden namespace gizlemek için <code>namespace :admin</code> yerine <code>scope :module =&gt; &#39;admin&#39;</code> kulanıyoruz. Örneğin;</p>
-<pre class="highlight plaintext">namespace :admin do
-  resources :posts, :comments
-end
-</pre>
+
+<p>namespace :admin do
+      resources :posts, :comments
+    end</p>
 
 <p>Oluşacak url <code>/admin/posts</code>,</p>
 
 <p>Oluşacak url helper <code>admin_posts_path</code>,</p>
-<pre class="highlight plaintext">scope :module =&gt; "admin" do
-  resources :posts, :comments
-end
-</pre>
+
+<p>scope :module =&gt; <q>admin</q> do
+      resources :posts, :comments
+    end</p>
 
 <p>Oluşacak url <code>/posts</code> olacaktır,</p>
 
 <p>Oluşacak url helper <code>posts_path</code> şeklinde olacaktır.</p>
 
-<p>Kaynak: http://guides.rubyonrails.org/routing.html#controller-namespaces-and-routing</p>
+<p>Kaynak: <a href="http://guides.rubyonrails.org/routing.html#controller-namespaces-and-routing">http://guides.rubyonrails.org/routing.html#controller-namespaces-and-routing</a></p>
 
 <p>Kolaylıklar&hellip;</p>
 

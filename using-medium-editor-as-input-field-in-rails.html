@@ -87,32 +87,32 @@ lab2023.com
 <p><a href="https://github.com/daviferreira/medium-editor">https://github.com/daviferreira/medium-editor</a></p>
 
 <p>I’m using it in a form partial (one of my current projects).</p>
-<pre class="highlight plaintext">=stylesheet_link_tag 'medium-editor.css'
-=javascript_include_tag 'medium-editor'
 
-= form_for @post do |f|
-  = f.hidden_field :body, html: { id: "body" }
-  .editable { data: { field: { id: "body" } } }
-  = f.submit
+<p>=stylesheet_link_tag &lsquo;medium-editor.css&rsquo;
+    =javascript_include_tag &lsquo;medium-editor&rsquo;</p>
 
-=javascript_include_tag 'input-field'
-</pre>
+<p>= form_for @post do |f|
+      = f.hidden_field :body, html: { id: <q>body</q> }
+      .editable { data: { field: { id: <q>body</q> } } }
+      = f.submit</p>
 
-<p>Normally you can just add &ldquo;.editable&rdquo; class on any element you like but you can&rsquo;t do it for an input field. What I&rsquo;ve done is, I just created my input field as hidden and a editable div with <strong><em>data-field-id</em></strong> is &ldquo;body&rdquo;.</p>
+<p>=javascript_include_tag &lsquo;input-field&rsquo;</p>
+
+<p>Normally you can just add <q>.editable</q> class on any element you like but you can&rsquo;t do it for an input field. What I&rsquo;ve done is, I just created my input field as hidden and a editable div with <strong><em>data-field-id</em></strong> is <q>body</q>.</p>
 
 <p>IDs of input field and editable field must be same, so we can create a polymorphic system for synchronization. Let&rsquo;s get to the <strong><em>input-field.js</em></strong> file.</p>
-<pre class="highlight plaintext">var editor = new MediumEditor('.editable');
 
-$('.editable').bind('input propertychange', function() {
-  $("#post_" + $(this).attr("data-field-id")).val($(this).html());
-});
-</pre>
+<p>var editor = new MediumEditor(&lsquo;.editable&rsquo;);</p>
+
+<p>$(&lsquo;.editable&rsquo;).bind(&lsquo;input propertychange&rsquo;, function() {
+      $(<q>#post_</q> + $(this).attr(<q>data-field-id</q>)).val($(this).html());
+    });</p>
 
 <p>When you create a MediumEditor object with &lsquo;.editable&rsquo; class, all elements (except input fields) with &lsquo;.editable&rsquo; class will turn into Medium Editor.</p>
 
-<p>Real magic we&rsquo;ll use is &ldquo;bind&rdquo; method of HTML elements. (Also I must warn you that you must include standard jQuery libraries). When a editable class element is changed, inner code of bind method will run. This way we&rsquo;ll get the editable element&rsquo;s <strong><em>data-field-id</em></strong> and concatenate it with &ldquo;#post_&rdquo; string.</p>
+<p>Real magic we&rsquo;ll use is <q>bind</q> method of HTML elements. (Also I must warn you that you must include standard jQuery libraries). When a editable class element is changed, inner code of bind method will run. This way we&rsquo;ll get the editable element&rsquo;s <strong><em>data-field-id</em></strong> and concatenate it with <q>#post_</q> string.</p>
 
-<p>Then we set the value of &ldquo;#post_element&rdquo; with editable class element&rsquo;s inner HTML. If you keep the names of hidden element and editable section same, you get a polymorphic synchronization. So you can use multiple Medium Editor input fields.</p>
+<p>Then we set the value of <q>#post_element</q> with editable class element&rsquo;s inner HTML. If you keep the names of hidden element and editable section same, you get a polymorphic synchronization. So you can use multiple Medium Editor input fields.</p>
 
 <div id='disqus_thread'></div>
 <script>

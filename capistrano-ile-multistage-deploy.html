@@ -87,60 +87,60 @@ lab2023.com
 <p>Deploy işlermlerinde bildiğiniz gibi capistrano kullanıyoruz. İşlemleri halihazırda capistrano kullandığınızı düşünerek anlatacağım.</p>
 
 <p><code>config/deploy.rb</code> ye capistrano multistage extension ekliyoruz.</p>
-<pre class="highlight plaintext"># config/deploy.rb
-require 'capistrano/ext/multistage'
-</pre>
+
+<p># config/deploy.rb
+    require &lsquo;capistrano/ext/multistage&rsquo;</p>
 
 <p>ve hangi stage ler olacağını belirtiyoruz</p>
-<pre class="highlight plaintext"># config/deploy.rb
-set :stages, %w(staging production)
-</pre>
+
+<p># config/deploy.rb
+    set :stages, %w(staging production)</p>
 
 <p>config altına deploy adında bir klasör oluşturup içerisine <code>production.rb</code> ve <code>staging.rb</code> dosyalarını oluşturuyoruz.</p>
-<pre class="highlight plaintext"># config/deploy/staging.rb
-server "156.0.0.0", :web, :app, :db, primary: true
-set :port, 1234
-set :rails_env, 'staging'
 
-namespace :deploy do
-  task :setup_config, roles: :app do
-    # Staging
-    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
+<p># config/deploy/staging.rb
+    server <q>156.0.0.0</q>, :web, :app, :db, primary: true
+    set :port, 1234
+    set :rails_env, &lsquo;staging&rsquo;</p>
 
-    sudo "ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}"
-  end
-end
+<p>namespace :deploy do
+      task :setup_config, roles: :app do
+        # Staging
+        sudo <q>ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}</q></p>
 
-# config/deploy/production.rb
-server "156.0.0.0", :web, :app, :db, primary: true
-set :port, 1234
-set :rails_env, 'production'
+<p>sudo <q>ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}</q>
+      end
+    end</p>
 
-namespace :deploy do
-  task :setup_config, roles: :app do
-    # Production
-    sudo "ln -nfs #{current_path}/config/nginx-ssl.conf /etc/nginx/sites-enabled/#{application}"
+<p># config/deploy/production.rb
+    server <q>156.0.0.0</q>, :web, :app, :db, primary: true
+    set :port, 1234
+    set :rails_env, &lsquo;production&rsquo;</p>
 
-    sudo "ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}"
-  end
-end
-</pre>
+<p>namespace :deploy do
+      task :setup_config, roles: :app do
+        # Production
+        sudo <q>ln -nfs #{current_path}/config/nginx-ssl.conf /etc/nginx/sites-enabled/#{application}</q></p>
+
+<p>sudo <q>ln -nfs #{current_path}/config/unicorn_init_#{rails_env}.sh /etc/init.d/unicorn_#{application}</q>
+      end
+    end</p>
 
 <p>Kodlardan da anlaşılacağı gibi birbirinden farklı olacak şeyleri ayrı dosyalara taşıdık. Ortak olanlar ise <code>deploy.rb</code> de kalıyor.</p>
 
 <p>Deploy kodunuda şu şekilde çalıştırıyoruz.</p>
-<pre class="highlight plaintext">cap production deploy
-cap staging deploy
-</pre>
+
+<p>cap production deploy
+    cap staging deploy</p>
 
 <p>veya</p>
-<pre class="highlight plaintext"># config/deploy.rb
-set :default_stage, "staging"
-</pre>
+
+<p># config/deploy.rb
+    set :default_stage, <q>staging</q></p>
 
 <p>default stage belirtip</p>
-<pre class="highlight plaintext">cap deploy
-</pre>
+
+<p>cap deploy</p>
 
 <p>yapıyoruz.</p>
 

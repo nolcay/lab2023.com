@@ -85,22 +85,22 @@ lab2023.com
 <p>Herkesin lokaldeki şifleri farklı olduğundan database.yml gibi veritabanı şifreleri bulunan dosyaları commit, push, pull etmekte sıkıntılar çıkıyor. Veritabanı yapılandırması için aşağıdaki gibi kullanıldığında, farklı kişiler projeyi kendi çalışma ortamlarına çekince sorun çıkmıyor.</p>
 
 <p>Örnek postgresql içindir.</p>
-<pre class="highlight plaintext">APP_NAME: Uygulamanın ismi
 
-development: &amp;default
-  adapter: postgresql
-  database: APP_NAME_development
-  encoding: utf8
-  min_messages: warning
-  pool: 5
-  timeout: 5000
-  host: localhost
-  port: 5432
+<p>APP_NAME: Uygulamanın ismi</p>
 
-test:
-  &lt;&lt;: *default
-  database: APP_NAME_test
-</pre>
+<p>development: &amp;default
+      adapter: postgresql
+      database: APP_NAME_development
+      encoding: utf8
+      min_messages: warning
+      pool: 5
+      timeout: 5000
+      host: localhost
+      port: 5432</p>
+
+<p>test:
+      &lt;&lt;: *default
+      database: APP_NAME_test</p>
 
 <p>Saygılarımla,
 İyi çalışmalar.</p>

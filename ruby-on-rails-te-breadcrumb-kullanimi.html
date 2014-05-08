@@ -85,60 +85,60 @@ lab2023.com
 <p>Ruby on Rails&#39;de bunun için geliştirilen <a href="https://github.com/weppos/breadcrumbs_on_rails">breadcrumbs_on_rails</a> geminin kullanımını anlatacağım.</p>
 
 <p>Öncelikle</p>
-<pre class="highlight plaintext">gem install breadcrumbs_on_rails
-</pre>
+
+<p>gem install breadcrumbs_on_rails</p>
 
 <p>diyerek gemi kuruyoruz ve projemizin Gemfile&#39;ına</p>
-<pre class="highlight plaintext">gem 'breadcrumbs_on_rails'
-</pre>
+
+<p>gem &lsquo;breadcrumbs_on_rails&rsquo;</p>
 
 <p>satırıyla ekliyoruz.</p>
 
 <p>Artık yapmamız gereken her controller methodu içerisinde kullanıcı oradayken ne görmesi gerekiyorsa</p>
-<pre class="highlight plaintext">def show
-    @product = Product.find(params[:id])
-    add_breadcrumb @product.name, product_path(@product)
-end
-</pre>
+
+<p>def show
+        @product = Product.find(params[:id])
+        add_breadcrumb @product.name, product_path(@product)
+    end</p>
 
 <p>şeklinde yazmak. Bir method içerisinde birden fazla breadcrumb ekleyebilirsiniz. Hepsi sırasıyla görüntülenir.</p>
 
 <p>Son olarak breadcrumb&#39;ın görünmesini istediğiniz layout&#39;ta</p>
-<pre class="highlight plaintext">= render_breadcrumbs :separator =&gt; ' / '
-</pre>
+
+<p>= render_breadcrumbs :separator =&gt; &lsquo; / &rsquo;</p>
 
 <p>koduyla breadcrumbları listeleyebilirsiniz.</p>
 
 <p>Ayrıca farklı stillerde görüntülemek için kendiniz manuel builderlar yazabilirsiniz. Örneğin twitter bootstrap tarzı breadcrumb için örnek builder</p>
-<pre class="highlight plaintext">class BootstrapBreadcrumbsBuilder &lt; BreadcrumbsOnRails::Breadcrumbs::Builder
-    def render
-        @context.content_tag(:ul, :class =&gt; 'breadcrumb') do
-        elements_count = @elements.size
-        i = 0
-        @elements.collect do |element|
-            i += 1
-            render_element(element, last = (i == elements_count))
-            end.join.html_safe
-        end
-    end
-    def render_element(element, last = false)
-        current = @context.current_page?(compute_path(element))
-        @context.content_tag(:li, :class =&gt; ('active' if last)) do
-            if last
-                link_or_text = compute_name(element)
-            else
-                link_or_text = @context.link_to(compute_name(element), compute_path(element), element.options)
-            end
-            divider = @context.content_tag(:span, (@options[:separator] || ' &amp;gt; ').html_safe, :class =&gt; 'divider') unless current
-            link_or_text + (last ? '' : (divider || ''))
-        end
-    end
-end
-</pre>
 
-<p>şeklindedir. Bunu &ldquo;lib/bootstrap<em>breadcrumbs</em>builder.rb&rdquo; içine yazarak.</p>
-<pre class="highlight plaintext">= render_breadcrumbs :builder =&gt; ::BootstrapBreadcrumbsBuilder, :separator =&gt; "&amp;raquo;"
-</pre>
+<p>class BootstrapBreadcrumbsBuilder &lt; BreadcrumbsOnRails::Breadcrumbs::Builder
+        def render
+            @context.content_tag(:ul, :class =&gt; &lsquo;breadcrumb&rsquo;) do
+            elements_count = @elements.size
+            i = 0
+            @elements.collect do |element|
+                i += 1
+                render_element(element, last = (i == elements_count))
+                end.join.html_safe
+            end
+        end
+        def render_element(element, last = false)
+            current = @context.current_page?(compute_path(element))
+            @context.content_tag(:li, :class =&gt; (&lsquo;active&rsquo; if last)) do
+                if last
+                    link_or_text = compute_name(element)
+                else
+                    link_or_text = @context.link_to(compute_name(element), compute_path(element), element.options)
+                end
+                divider = @context.content_tag(:span, (@options[:separator] || &lsquo; &gt; &rsquo;).html_safe, :class =&gt; &lsquo;divider&rsquo;) unless current
+                link_or_text + (last ? &ldquo; : (divider || &rdquo;))
+            end
+        end
+    end</p>
+
+<p>şeklindedir. Bunu <q>lib/bootstrap_breadcrumbs_builder.rb</q> içine yazarak.</p>
+
+<p>= render_breadcrumbs :builder =&gt; ::BootstrapBreadcrumbsBuilder, :separator =&gt; <q>&raquo;</q></p>
 
 <p>şeklinde kullanabilirsiniz.</p>
 

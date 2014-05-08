@@ -85,20 +85,20 @@ lab2023.com
 <p>Merhabalar;</p>
 
 <p>Rails te url helper olarak <code>_path</code> ve <code>_url</code> kullanıyoruz. Neden bazen <code>_url</code> bazen <code>_path</code> kullanıyoruz ? Çünkü farklı şeyler. İkiside aynı yolu göstermiş olsa bile. Şimdi her ikisinide inceleyelim.</p>
-<pre class="highlight plaintext">= link_to 'lab2023', users_path
-</pre>
+
+<p>= link_to &lsquo;lab2023&rsquo;, users_path</p>
 
 <p>Bu helperın html çıktısı şu şekilde;</p>
-<pre class="highlight plaintext">&lt;a href="/users"&gt;lab2023&lt;/a&gt;
-</pre>
+
+<p><a href="/users">lab2023</a></p>
 
 <p>Görüdüğünüz gibi href içerisine <code>/users</code> gelmiş. Şimdi diğerini inceleyelim.</p>
-<pre class="highlight plaintext">= link_to 'lab2023', users_url
-</pre>
+
+<p>= link_to &lsquo;lab2023&rsquo;, users_url</p>
 
 <p>Bu helperında html çıktısı şu şekilde;</p>
-<pre class="highlight plaintext">&lt;a href="http://routing.dev/users"&gt;lab2023&lt;/a&gt;
-</pre>
+
+<p><a href="http://routing.dev/users">lab2023</a></p>
 
 <p>Aslında bu iki çıktı herşeyi anlatıyor bize. <code>_url</code> helper yönlendirmek istediğimiz yolun başına şu anki domani ekleyerek çıktı üretirken <code>_path</code> sadece yolu çıktı olarak vermiştir. Bu yüzden view&#39; larda sayfa boyutunu arttırmamak için <code>_path</code> kullanıyoruz. Sonuçta <code>&lt;a href=&quot;http://routing.dev/users&quot;&gt;lab2023&lt;/a&gt;</code> ile <code>&lt;a href=&quot;/users&quot;&gt;lab2023&lt;/a&gt;</code> byte farkı var. Peki <code>_url</code> helperını nerede kullanacağız ? Bu heleperıda contollerda <code>redirect_to</code> larda kullanıyoruz. Çünkü HTTP standartları 300 kodlarında yani yönlendirmelerde Header içerisndeki Location a verilen url&#39; in tam olmasını zorunlu kılmaktadır.</p>
 

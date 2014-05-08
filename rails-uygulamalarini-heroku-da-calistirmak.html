@@ -85,57 +85,57 @@ lab2023.com
 <p>Uygulamamızı çalıştırmadan önce ilk iş olarak <a href="https://www.heroku.com/">Heroku</a>&lsquo;ya üye olmamız ve <a href="https://github.com/heroku/heroku">heroku gem</a>ini kurmamız gerekiyor.</p>
 
 <p>Bunun için;</p>
-<pre class="highlight plaintext">gem install heroku
-</pre>
+
+<p>gem install heroku</p>
 
 <p>diyerek gemi kuruyoruz.</p>
 
 <p>Ardından</p>
-<pre class="highlight plaintext">heroku login
-</pre>
+
+<p>heroku login</p>
 
 <p>komutunu çalıştırarak bilgilerimizle giriş yapıyoruz.</p>
 
 <p>Ardından projemize git&#39;i initialize etmediysek,</p>
-<pre class="highlight plaintext">git init
-git add .
-git commit -m 'first commit for heroku'
-</pre>
+
+<p>git init
+    git add .
+    git commit -m &#39;first commit for heroku&rsquo;</p>
 
 <p>Eğer initialize edildiyse sadece commitinizi yapıp 2. aşamaya geçebilirsiniz.</p>
 
 <p>Sıradaki işlem herokuda bir uygulama oluşturmak. Bunun için terminalde</p>
-<pre class="highlight plaintext">heroku create &lt;uygulama adı&gt; --region eu
-</pre>
+
+<p>heroku create <uygulama adı> &ndash;region eu</p>
 
 <p>komutunu çalıştırarak uygulamamızı oluşturabiliriz.</p>
 
 <p>Artık tek yapmamız gereken uygulamamızda GemFile&#39;ımıza</p>
-<pre class="highlight plaintext">gem 'pg'
-</pre>
+
+<p>gem &lsquo;pg&rsquo;</p>
 
 <p>yi ekledikten sonra uygulamayı herokuya göndermek.</p>
 
 <p>Bunun için</p>
-<pre class="highlight plaintext">git push heroku master
-</pre>
+
+<p>git push heroku master</p>
 
 <p>komutunu kullanıyoruz.</p>
 
 <p>Artık uygulamanız heroku&#39;da çalışır halde ziyaret etmek için</p>
-<pre class="highlight plaintext">heroku open
-</pre>
+
+<p>heroku open</p>
 
 <p>yazıp sayfayı görüntüleyebilirsiniz.</p>
 
-<p>Bunun yanında herokuda terminal işlemleri yapmak için &ldquo;heroku run&rdquo; komutunu kullanıyoruz</p>
-<pre class="highlight plaintext">heroku run rake db:migrate
-heroku run bundle instal
-</pre>
+<p>Bunun yanında herokuda terminal işlemleri yapmak için <q>heroku run</q> komutunu kullanıyoruz</p>
+
+<p>heroku run rake db:migrate
+    heroku run bundle instal</p>
 
 <p>gibi. Ayrıntılı listeye</p>
-<pre class="highlight plaintext">heroku --help
-</pre>
+
+<p>heroku &ndash;help</p>
 
 <p>ile ulaşabilirsiniz.</p>
 

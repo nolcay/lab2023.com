@@ -90,32 +90,32 @@ lab2023.com
 
 <p><code>Haml</code> helper&#39; larını kullanacağız.</p>
 
-<h3><code>capture_haml</code></h3>
+<h3 id="capture_haml"><code>capture_haml</code></h3>
 
 <p>Haml kod bloğunu çıktı olarak verir. Çıktı string html kodudur.</p>
 
-<h3><code>haml_tag</code></h3>
+<h3 id="haml_tag"><code>haml_tag</code></h3>
 
 <p>Verilen parametrelere göre html tag&#39; ı oluşturur.</p>
 
-<h3><code>haml_concat</code></h3>
+<h3 id="haml_concat"><code>haml_concat</code></h3>
 
 <p>Text olarak çıktı verir.</p>
 
 <p>Şimdi aşağıdaki örneği inceleyelim</p>
-<pre class="highlight plaintext">module ApplicationHelper
-  def format_state(state, large = false)
-    capture_haml do
-      css_classes = %w(label)
-      css_classes &lt;&lt; state
-      css_classes &lt;&lt; 'large' if large
-      haml_tag :span, class: css_classes do
-        haml_concat t("helpers.state.#{state}")
+
+<p>module ApplicationHelper
+      def format_state(state, large = false)
+        capture_haml do
+          css_classes = %w(label)
+          css_classes &lt;&lt; state
+          css_classes &lt;&lt; &lsquo;large&rsquo; if large
+          haml_tag :span, class: css_classes do
+            haml_concat t(<q>helpers.state.#{state}</q>)
+          end
+        end
       end
-    end
-  end
-end
-</pre>
+    end</p>
 
 <p><code>haml_tag</code> ile <code>span</code> tag&#39; ı oluşturup <code>class:</code> parametresi ile class veriyoruz. <code>haml_concat</code> ile de span tag&#39; ı içerisine yazacağımız text&#39; i oluşturuyoruz.</p>
 
