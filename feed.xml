@@ -5,7 +5,132 @@
   <id>http://lab2023.com/</id>
   <link href="http://lab2023.com/"/>
   <link href="http://lab2023.com/feed.xml" rel="self"/>
-  <updated>2014-05-02T00:00:00Z</updated>
+  <updated>2014-05-09T00:00:00Z</updated>
+  <entry>
+    <title>Life Saving Commands: nohup &amp; disown</title>
+    <link rel="alternate" href="http://lab2023.com/life-saving-commands-nohup-and-disown.html"/>
+    <id>http://lab2023.com/life-saving-commands-nohup-and-disown.html</id>
+    <published>2014-05-09T00:00:00Z</published>
+    <updated>2014-05-12T09:53:47+03:00</updated>
+    <author>
+      <name>lab2023</name>
+    </author>
+    <content type="html">&lt;h2 id="why-do-we-need-nohup-or-disown-?"&gt;Why do we need &lt;code&gt;nohup&lt;/code&gt; or &lt;code&gt;disown&lt;/code&gt; ?&lt;/h2&gt;
+
+&lt;p&gt;Sometimes while you&amp;#39; re developing, you need a job to continue running in the background even if you close the terminal. Sometimes you need a command running on a remote machine connected with ssh in a terminal window. Sometimes you start the command on the terminal and accidentally close the terminal. So you need to have a look at these commands: &lt;code&gt;nohup&lt;/code&gt; and &lt;code&gt;disown&lt;/code&gt;. You need these.&lt;/p&gt;
+
+&lt;h2 id="nohup"&gt;&lt;code&gt;nohup&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;This is a POSIX command. It&amp;rsquo;s a short for  &amp;lsquo; &lt;strong&gt;NO&lt;/strong&gt;  &lt;strong&gt;H&lt;/strong&gt; ang &lt;strong&gt;UP&lt;/strong&gt; &amp;rsquo;. By using this command you tell the system to ignore the hangup signal for specified command.&lt;/p&gt;
+
+&lt;h3 id="without-nohup"&gt;Without nohup&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s test some commands:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;sleep 3600 &amp;amp;
+&lt;/pre&gt;
+
+&lt;p&gt;This command will add a background job that waits for 3600 seconds. Why do we need that? We&amp;rsquo;re just putting commands running on background.&lt;/p&gt;
+
+&lt;p&gt;You can see the command running by following command:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+9826 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;You can see a similar result with a different process id. Note the process id and close the terminal. When you open a new terminal re-write the command:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;So no result? That&amp;rsquo;s correct, your command got a hangup signal when you close the terminal and it&amp;rsquo;s not running now.&lt;/p&gt;
+
+&lt;h3 id="with-nohup"&gt;With &lt;code&gt;nohup&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;When you need a command running in the background even if you close the terminal, you can simply write &lt;code&gt;nohup&lt;/code&gt; before the command and go. If you already started the command, don&amp;rsquo;t worry and wait for the &lt;code&gt;disown&lt;/code&gt; section.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s use &lt;code&gt;nohup&lt;/code&gt; now:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;nohup sleep 3600 &amp;amp;
+&lt;span class="o"&gt;[&lt;/span&gt;1] 10325
+appending output to nohup.out
+&lt;/pre&gt;
+
+&lt;p&gt;It runs in the background and writes the output to the file nohup.out by default. Check the command still running.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+10325 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;Did you note the process id? So let&amp;rsquo;s close the terminal, open a new one and see what happens.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+10325 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;So you see it&amp;rsquo;s still there running. So we&amp;rsquo;re done with &lt;code&gt;nohup&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Do not forget to quit the sleep job, because we don&amp;rsquo;t need that now. This is how you can do that:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="nb"&gt;kill&lt;/span&gt; -s QUIT &lt;span class="k"&gt;$(&lt;/span&gt;ps aux | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt; | awk &lt;span class="s1"&gt;'{print $2}'&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This command gets the process ids for all sleep jobs and send them QUIT signal.&lt;/p&gt;
+
+&lt;h2 id="what-about-disown?"&gt;What about &lt;code&gt;disown&lt;/code&gt;?&lt;/h2&gt;
+
+&lt;p&gt;After looking at &lt;code&gt;nohup&lt;/code&gt;, let&amp;rsquo;s look at &lt;code&gt;disown&lt;/code&gt;. It is used to unbind a job from the current session. Let&amp;#39; s think about this scenario:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You started a command that&amp;rsquo;s taking too much time,&lt;/li&gt;
+&lt;li&gt;you have to close the terminal,&lt;/li&gt;
+&lt;li&gt;but you forgot to use &lt;code&gt;nohup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It&amp;rsquo;s bad for you, but wait! There&amp;rsquo;s &lt;code&gt;disown&lt;/code&gt; suitable for you. You can use it.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s run our command:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;sleep 3600 &amp;amp;
+&lt;span class="gp"&gt;% &lt;/span&gt;sleep 3600 &amp;amp;
+&lt;/pre&gt;
+
+&lt;p&gt;Check them running in the background.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+11661 sleep 3600
+11666 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;We already know that if we close terminal we will make them hangup. So take note about the process ids. And this command list the active jobs.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;&lt;span class="nb"&gt;jobs&lt;/span&gt; -l -p
+&lt;span class="o"&gt;[&lt;/span&gt;1]  - 11661 running    sleep 3600
+&lt;span class="o"&gt;[&lt;/span&gt;2]  + 11666 running    sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;You see the last command with a plus sign left. Let&amp;rsquo;s use disown and see what happens.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;&lt;span class="nb"&gt;disown&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;When you check them you&amp;rsquo;ll see both running on the background:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+11661 sleep 3600
+11666 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s see the active jobs again:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;&lt;span class="nb"&gt;jobs&lt;/span&gt; -l -p
+&lt;span class="o"&gt;[&lt;/span&gt;1]  + 11661 running    sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;You see the latest command is unbound from current session. If we close the terminal now and open a new terminal, we lose only the first command.
+Let&amp;rsquo;s close the terminal and open a new one and check that:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="gp"&gt;% &lt;/span&gt;ps -e -o pid,command | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt;
+11666 sleep 3600
+&lt;/pre&gt;
+
+&lt;p&gt;If you check the active jobs, you don&amp;rsquo;t see any. Because the previous job is not bound to any sessions and continue working in the background.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="nb"&gt;jobs&lt;/span&gt; -l -p
+&lt;/pre&gt;
+
+&lt;p&gt;Do not forget to quit the sleep job running in background, because we don&amp;rsquo;t need that now, either:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="nb"&gt;kill&lt;/span&gt; -s QUIT &lt;span class="k"&gt;$(&lt;/span&gt;ps aux | grep &lt;span class="s1"&gt;'[s]leep'&lt;/span&gt; | awk &lt;span class="s1"&gt;'{print $2}'&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;So I wish this commands will be helpful for you, too.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Vagrant'a Giriş</title>
     <link rel="alternate" href="http://lab2023.com/vagranta-giris.html"/>
@@ -1130,66 +1255,6 @@ and run this command &lt;code&gt;$ ruby socket-app.rb&lt;/code&gt; in the consol
 &lt;p&gt;git push -u origin master&lt;/p&gt;
 
 &lt;p&gt;bu son satırımızda dizimizi uzak depoya taşıyor.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>git-flow ve varsayılan branch master'dan farklı iken kullanımı</title>
-    <link rel="alternate" href="http://lab2023.com/git-flow-ve-varsayilan-branch-master-dan-farkli-iken-kullanimi.html"/>
-    <id>http://lab2023.com/git-flow-ve-varsayilan-branch-master-dan-farkli-iken-kullanimi.html</id>
-    <published>2013-08-01T00:00:00Z</published>
-    <updated>2014-04-26T16:50:19+03:00</updated>
-    <author>
-      <name>lab2023</name>
-    </author>
-    <content type="html">&lt;p&gt;Projelerde birden fazla branch kullanımı çok doğal. Zaman zaman varsayılan branch master&amp;#39;dan farklı da olabiliyor. Bu gibi durumlarda, projeyi kendi üzerine yeni çeken kişi, git-flow initialize etmek istediğinde hata alıyor. Ancak bu problemi aşmak ve git-flow&amp;#39;u kullanabilmek mümkün.&lt;/p&gt;
-
-&lt;p&gt;Nasıl mı? İşte cevabı:&lt;/p&gt;
-
-&lt;p&gt;Örneğin varsayılan branch develop olduğunda projeyi checkout edelim. Hemen ardından, git-flow initialize etmek istersek aşağıdaki hatayı alıyoruz.&lt;/p&gt;
-
-&lt;p&gt;#git flow init&lt;/p&gt;
-
-&lt;p&gt;Which branch should be used for bringing forth production releases?
-       - develop
-    Branch name for production releases: []
-    Local branch &amp;ldquo; does not exist.&lt;/p&gt;
-
-&lt;p&gt;Panik yapıp işleri karıştırmaya, hataya kızıp git-flow kullanımını bırakmaya gerek yok.&lt;/p&gt;
-
-&lt;p&gt;Peki ne yapacağız? Çok basit.&lt;/p&gt;
-
-&lt;p&gt;Master branch checkout edelim:&lt;/p&gt;
-
-&lt;p&gt;#git checkout master
-    Branch master set up to track remote branch master from origin.
-    Switched to a new branch &amp;lsquo;master&amp;rsquo;&lt;/p&gt;
-
-&lt;p&gt;Sonrasında git-flow initialize edelim. (Varsayılan değerleri kabul edebilirsiniz)&lt;/p&gt;
-
-&lt;p&gt;#git flow init&lt;/p&gt;
-
-&lt;p&gt;Which branch should be used for bringing forth production releases?
-       - develop
-       - master
-    Branch name for production releases: [master]&lt;/p&gt;
-
-&lt;p&gt;Which branch should be used for integration of the &lt;q&gt;next release&lt;/q&gt;?
-       - develop
-    Branch name for &lt;q&gt;next release&lt;/q&gt; development: [develop]&lt;/p&gt;
-
-&lt;p&gt;How to name your supporting branch prefixes?
-    Feature branches? [feature/]
-    Release branches? [release/]
-    Hotfix branches? [hotfix/]
-    Support branches? [support/]
-    Version tag prefix? []&lt;/p&gt;
-
-&lt;p&gt;En son olarak develop branch&amp;#39;ını, tekrardan checkout edelim.&lt;/p&gt;
-
-&lt;p&gt;#git checkout develop
-    Switched to branch &amp;lsquo;develop&amp;rsquo;&lt;/p&gt;
-
-&lt;p&gt;Hepsi bu kadar. Artık git-flow ve nimetlerinden faydalanabilirsiniz.&lt;/p&gt;
 </content>
   </entry>
 </feed>
